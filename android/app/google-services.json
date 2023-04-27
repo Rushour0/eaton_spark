@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "57566578344",
+    "project_id": "eaton-spark",
+    "storage_bucket": "eaton-spark.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:57566578344:android:c2837a80ddea6eb576649d",
+        "android_client_info": {
+          "package_name": "com.example.eaton_spark"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "57566578344-tp3puj6gq7d4cgag8vi2uu85p8p1mrfc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBy9nNjgurHdFDfowd_iMayzyy8rD8a34c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "57566578344-c1j039a0qjevjifialtjrflu36k18se0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
