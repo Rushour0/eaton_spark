@@ -1,3 +1,4 @@
+import 'package:eaton_spark/src/bloc/authentication/bloc.dart';
 import 'package:eaton_spark/src/models/user.dart';
 import 'package:eaton_spark/src/services/firebase/authentication.dart';
 import 'package:eaton_spark/src/services/firebase/database.dart';
@@ -31,6 +32,7 @@ class AuthenticationModel {
   static Future<UserCredential?> signIn(
       {required String email, required String password}) {
     try {
+      AuthenticationBloc().loginStarted();
       return service.signIn(email: email, password: password);
     } on FirebaseAuthException catch (e) {
       throw FirebaseAuthException(code: e.code, message: e.message);
@@ -59,7 +61,8 @@ class AuthenticationModel {
   }
 
   static Future<void> signOut() {
-    return service.signOut();
+    service.signOut();
+    return AuthenticationBloc().loggedOut();
   }
 
   static Future<String?> retrieveUserName() {

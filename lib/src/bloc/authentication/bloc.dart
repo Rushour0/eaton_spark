@@ -1,9 +1,7 @@
 import 'package:eaton_spark/src/models/user.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:eaton_spark/src/models/authentication.dart';
 
 part 'event.dart';
@@ -22,9 +20,18 @@ class AuthenticationBloc
           emit(AuthenticationFailure());
         }
       } else if (event is AuthenticationSignedOut) {
-        await AuthenticationModel.signOut();
-        emit(AuthenticationFailure());
+        emit(AuthenticationLogOut());
       }
     });
+  }
+
+  bool get isLoggedIn => true;
+
+  Future<void> loginStarted() async {
+    add(AuthenticationStarted());
+  }
+
+  Future<void> loggedOut() async {
+    add(AuthenticationSignedOut());
   }
 }

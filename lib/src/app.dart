@@ -49,7 +49,7 @@ class App extends StatelessWidget {
               ),
               themeMode: snapshot.data!.theme,
               title: _title,
-              initialRoute: AppRoutes.home,
+              initialRoute: AppRoutes.signin,
               onGenerateRoute: (route) {
                 return MaterialPageRoute(builder: (context) {
                   switch (route.name!.split('?')[0]) {

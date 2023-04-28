@@ -21,38 +21,17 @@ class HorizontalSection extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
       child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+          crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
               title,
-              style: Theme.of(context).textTheme.headlineSmall,
+              style: Theme.of(context).textTheme.titleLarge,
             ),
-            SizedBox(
-              height: height,
-              child: scrollable
-                  ? CustomScrollView(
-                      scrollDirection: Axis.horizontal,
-                      physics: const BouncingScrollPhysics(),
-
-                      // anchor: 0.0,
-                      slivers: children
-                          .map(
-                            (e) => SliverToBoxAdapter(
-                              child: Padding(
-                                padding: EdgeInsets.only(
-                                  right: 8,
-                                ),
-                                child: e,
-                              ),
-                            ),
-                          )
-                          .toList(),
-                    )
-                  : Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      // mainAxisSize: MainAxisSize.min,
+            scrollable
+                ? SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
                       children: children
                           .map(
                             (e) => Padding(
@@ -64,7 +43,21 @@ class HorizontalSection extends StatelessWidget {
                           )
                           .toList(),
                     ),
-            ),
+                  )
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: children
+                        .map(
+                          (e) => Padding(
+                            padding: EdgeInsets.only(
+                              right: 8,
+                            ),
+                            child: e,
+                          ),
+                        )
+                        .toList(),
+                  ),
           ]
               .map((e) =>
                   Padding(padding: EdgeInsets.only(top: spacing), child: e))

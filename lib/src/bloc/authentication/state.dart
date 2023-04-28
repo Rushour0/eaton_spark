@@ -24,3 +24,8 @@ class AuthenticationFailure extends AuthenticationState {
   @override
   List<Object?> get props => [];
 }
+
+class AuthenticationLogOut extends AuthenticationState {
+  @override
+  List<Object?> get props => [];
+}

@@ -1,3 +1,4 @@
+import 'package:eaton_spark/src/bloc/authentication/bloc.dart';
 import 'package:eaton_spark/src/widgets/appbar/appbar.dart';
 import 'package:eaton_spark/src/widgets/card/article_card.dart';
 import 'package:eaton_spark/src/widgets/card/icon_card.dart';
@@ -5,6 +6,7 @@ import 'package:eaton_spark/src/widgets/card/service_card.dart';
 import 'package:eaton_spark/src/widgets/sections/grid.dart';
 import 'package:eaton_spark/src/widgets/sections/horizontal.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Dashboard extends StatelessWidget {
   const Dashboard({super.key});
@@ -19,7 +21,20 @@ class Dashboard extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            CustomAppbar(title: 'Welcome User!'),
+            CustomAppbar(title: 'Eaton Spark'),
+            BlocProvider(
+                create: (_) => AuthenticationBloc(),
+                child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+                  builder: (context, state) {
+                    print(state);
+                    if (state is AuthenticationSuccess) {
+                      return Container(
+                        child: Text("Welcome ${state.displayName ?? 'asda'}"),
+                      );
+                    }
+                    return Text('You are not logged in');
+                  },
+                )),
             HorizontalSection(
               title: 'Nearby Stations',
               scrollable: true,
