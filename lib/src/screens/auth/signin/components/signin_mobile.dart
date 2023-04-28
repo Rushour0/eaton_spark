@@ -1,9 +1,11 @@
 import 'package:eaton_spark/src/globals/colors.dart';
+import 'package:eaton_spark/src/globals/svg.dart';
 import 'package:eaton_spark/src/models/routes.dart';
 import 'package:eaton_spark/src/widgets/button/button.dart';
 import 'package:eaton_spark/src/widgets/textfield/textfield.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class SigninMobile extends StatelessWidget {
   const SigninMobile({
@@ -53,39 +55,43 @@ class SigninMobile extends StatelessWidget {
                   child: Align(
                     alignment: Alignment.topLeft,
                     child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          // SvgPicture.string(
-                          //   appwriteSvgString,
-                          //   width: screenWidth * 0.3,
-                          // ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                title,
-                                style: TextStyle(
-                                  color: GlobalColor.text,
-                                  fontSize: screenHeight * 0.05,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // SvgPicture.string(
+                        //   GlobalSvg.logoSvg,
+                        //   width: screenWidth * 0.25,
+                        // ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              title,
+                              style: TextStyle(
+                                color: GlobalColor.text,
+                                fontSize: screenHeight * 0.05,
+                                fontWeight: FontWeight.bold,
                               ),
-                              Text(
-                                'Sign In',
-                                style: TextStyle(
-                                  color: GlobalColor.text.withAlpha(192),
-                                  fontSize: screenHeight * 0.035,
-                                  fontWeight: FontWeight.w100,
-                                ),
+                            ),
+                            Text(
+                              'Sign In',
+                              style: TextStyle(
+                                color: GlobalColor.text.withAlpha(192),
+                                fontSize: screenHeight * 0.035,
+                                fontWeight: FontWeight.w100,
                               ),
-                            ],
-                          ),
-                        ]
-                            .map((e) => Padding(
-                                padding: EdgeInsets.only(
-                                    bottom: screenHeight * 0.05),
-                                child: e))
-                            .toList()),
+                            ),
+                          ],
+                        ),
+                      ]
+                          .map(
+                            (e) => Padding(
+                              padding:
+                                  EdgeInsets.only(bottom: screenHeight * 0.05),
+                              child: e,
+                            ),
+                          )
+                          .toList(),
+                    ),
                   ),
                 ),
                 Column(

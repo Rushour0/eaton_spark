@@ -2,9 +2,9 @@ import 'package:eaton_spark/src/bloc/authentication/bloc.dart';
 import 'package:eaton_spark/src/widgets/appbar/appbar.dart';
 import 'package:eaton_spark/src/widgets/card/article_card.dart';
 import 'package:eaton_spark/src/widgets/card/icon_card.dart';
-import 'package:eaton_spark/src/widgets/card/service_card.dart';
-import 'package:eaton_spark/src/widgets/sections/grid.dart';
+import 'package:eaton_spark/src/widgets/floating_button/dashboard.dart';
 import 'package:eaton_spark/src/widgets/sections/horizontal.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -13,48 +13,47 @@ class Dashboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return NotificationListener<OverscrollIndicatorNotification>(
-      onNotification: (notification) {
-        notification.disallowIndicator();
-        return true;
-      },
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            CustomAppbar(title: 'Eaton Spark'),
-            BlocProvider(
+    return Scaffold(
+      body: NotificationListener<OverscrollIndicatorNotification>(
+        onNotification: (notification) {
+          notification.disallowIndicator();
+          return true;
+        },
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              BlocProvider(
                 create: (_) => AuthenticationBloc(),
                 child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
                   builder: (context, state) {
-                    print(state);
-                    if (state is AuthenticationSuccess) {
-                      return Container(
-                        child: Text("Welcome ${state.displayName ?? 'asda'}"),
+                    if (state.isLoggedIn) {
+                      return Padding(
+                        padding: EdgeInsets.fromLTRB(16, 0, 16, 8),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            "Welcome ${FirebaseAuth.instance.currentUser!.displayName}",
+                            style: TextStyle(fontSize: 18),
+                          ),
+                        ),
                       );
                     }
                     return Text('You are not logged in');
                   },
-                )),
-            HorizontalSection(
-              title: 'Nearby Stations',
-              scrollable: true,
-              height: 150,
-              children: [
-                'assets/images/stations.jpeg',
-                'assets/images/ambient-car-charge.jpeg',
-                'assets/images/car-charge.jpeg',
-              ]
-                  .map(
-                    (image) => ArticleCard(
-                      title: 'EV Charge',
-                      subtitle: 'Stations',
-                      image: image,
-                      onTap: () {},
-                    ),
-                  )
-                  .toList(),
-            ),
-            HorizontalSection(
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.fromLTRB(16, 8, 16, 0),
+                child: Text(
+                  'Find Your Charge!',
+                  style: TextStyle(
+                    fontSize: 72,
+                  ),
+                ),
+              ),
+              HorizontalSection(
                 height: 70,
                 title: 'Suggestions',
                 scrollable: false,
@@ -79,39 +78,66 @@ class Dashboard extends StatelessWidget {
                     text: 'Location',
                     size: 70,
                   ),
-                ]),
-            GridSection(
-              title: 'All Services',
-              height: 400,
-              children: {
-                'Battery Swap': 'assets/images/battery.png',
-                'Add EV': 'assets/images/car.png',
-                'EV Charge': 'assets/images/charging-station.png',
-                'Explore Routes': 'assets/images/route.png',
-              }
-                  .entries
-                  .map(
-                    (entry) => ServiceCard(
-                      title: entry.key,
-                      image: entry.value,
-                      onTap: () {},
+                ],
+              ),
+              HorizontalSection(
+                title: 'Nearby Stations',
+                scrollable: true,
+                height: 175,
+                rightPadding: 24,
+                children: [
+                  'assets/images/stations.jpeg',
+                  'assets/images/ambient-car-charge.jpeg',
+                  'assets/images/car-charge.jpeg',
+                ]
+                    .map(
+                      (image) => ArticleCard(
+                        title: 'EV Charge',
+                        subtitle: 'Stations',
+                        image: image,
+                        onTap: () {},
+                      ),
+                    )
+                    .toList(),
+              ),
+              HorizontalSection(
+                title: 'About Us',
+                scrollable: true,
+                height: 175,
+                rightPadding: 24,
+                children: [
+                  'assets/images/car-charge.jpeg',
+                  'assets/images/ambient-car-charge.jpeg',
+                  'assets/images/stations.jpeg',
+                ]
+                    .map(
+                      (image) => ArticleCard(
+                        title: 'EV Charge',
+                        subtitle: 'Stations',
+                        image: image,
+                        onTap: () {},
+                      ),
+                    )
+                    .toList(),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 24, bottom: 8.0),
+                  child: Text(
+                    'Made With Love :) Rushour0',
+                    style: TextStyle(
+                      fontSize: 8,
+                      fontWeight: FontWeight.w100,
                     ),
-                  )
-                  .toList(),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
-              child: Text(
-                'Made With Love :) Rushour0',
-                style: TextStyle(
-                  fontSize: 8,
-                  fontWeight: FontWeight.w100,
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
+      floatingActionButton: const FloatingButtonDashboard(),
     );
   }
 }

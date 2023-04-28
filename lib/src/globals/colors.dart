@@ -8,7 +8,9 @@ class GlobalColor {
     _theme = theme;
   }
 
-  static const Color primary = Color(0xFF0F7D63);
+  static const Color primary = Color(0xFF117A08);
+
+  static const Color secondary = Color(0xFFFFDE59);
 
   static const Color dark = Color(0xFF242424);
 

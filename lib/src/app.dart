@@ -8,6 +8,7 @@ import 'package:eaton_spark/src/screens/auth/signin/signin.dart';
 import 'package:eaton_spark/src/screens/auth/signup/signup.dart';
 import 'package:eaton_spark/src/screens/common/not_found.dart';
 import 'package:eaton_spark/src/screens/home/main_page.dart';
+import 'package:eaton_spark/src/screens/splash/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -31,14 +32,6 @@ class App extends StatelessWidget {
                   brightness: Brightness.light,
                 ),
                 fontFamily: 'Avenir',
-                switchTheme: SwitchThemeData(
-                  thumbColor: MaterialStateProperty.all<Color>(
-                    GlobalColor.primary,
-                  ),
-                  trackColor: MaterialStateProperty.all<Color>(
-                    GlobalColor.primary.withOpacity(0.5),
-                  ),
-                ),
               ),
               darkTheme: ThemeData(
                 colorScheme: ColorScheme.fromSeed(
@@ -49,24 +42,28 @@ class App extends StatelessWidget {
               ),
               themeMode: snapshot.data!.theme,
               title: _title,
-              initialRoute: AppRoutes.signin,
+              initialRoute: AppRoutes.splash,
               onGenerateRoute: (route) {
                 return MaterialPageRoute(builder: (context) {
                   switch (route.name!.split('?')[0]) {
+                    case AppRoutes.splash:
+                      return const Splash();
                     case AppRoutes.home:
                       return MainPage();
                     case AppRoutes.forgotPassword:
                       return ForgotPassword(
                         title: _title,
                         successCallback: () {
-                          Navigator.pushNamed(context, AppRoutes.home);
+                          Navigator.pushNamedAndRemoveUntil(
+                              context, AppRoutes.home, (context) => false);
                         },
                       );
                     case AppRoutes.signin:
                       return Signin(
                         title: _title,
                         successCallback: () {
-                          Navigator.pushNamed(context, AppRoutes.home);
+                          Navigator.pushNamedAndRemoveUntil(
+                              context, AppRoutes.home, (context) => false);
                         },
                       );
 

@@ -29,6 +29,13 @@
             {
               "client_id": "57566578344-c1j039a0qjevjifialtjrflu36k18se0.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "57566578344-pj9d91i73nknauueg6q77fvqqqg4ogd4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.eatonSpark"
+              }
             }
           ]
         }

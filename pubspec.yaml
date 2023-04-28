@@ -44,6 +44,9 @@ dependencies:
   cloud_firestore: ^4.5.2
   circular_menu: ^2.0.1
   flutter_speed_dial: ^6.2.0
+  flutter_svg: ^2.0.5
+  google_maps_flutter: ^2.2.5
+  geolocator: ^9.0.2
 
 dev_dependencies:
   flutter_test:

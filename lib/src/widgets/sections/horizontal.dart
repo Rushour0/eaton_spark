@@ -7,12 +7,16 @@ class HorizontalSection extends StatelessWidget {
     required this.children,
     this.height = 100,
     this.spacing = 8,
+    this.verticalPadding = 8,
     this.title = 'Horizontal Section',
+    this.rightPadding = 8,
   }) : super(key: key);
   final double height;
   final double spacing;
   final String title;
   final bool scrollable;
+  final double verticalPadding;
+  final double rightPadding;
   final List<Widget> children;
 
   @override
@@ -30,14 +34,14 @@ class HorizontalSection extends StatelessWidget {
             ),
             scrollable
                 ? SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
                     scrollDirection: Axis.horizontal,
                     child: Row(
                       children: children
                           .map(
                             (e) => Padding(
                               padding: EdgeInsets.only(
-                                right: 8,
-                              ),
+                                  right: rightPadding, bottom: verticalPadding),
                               child: e,
                             ),
                           )
@@ -51,8 +55,7 @@ class HorizontalSection extends StatelessWidget {
                         .map(
                           (e) => Padding(
                             padding: EdgeInsets.only(
-                              right: 8,
-                            ),
+                                right: rightPadding, bottom: verticalPadding),
                             child: e,
                           ),
                         )

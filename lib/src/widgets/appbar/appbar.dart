@@ -34,10 +34,6 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
               ),
             ),
             centerTitle: true,
-            leading: IconButton(
-              icon: Icon(Icons.menu, color: GlobalColor.text),
-              onPressed: () {},
-            ),
             actions: [
               IconButton(
                 icon: BlocProvider.of<ThemeBloc>(context).isDark

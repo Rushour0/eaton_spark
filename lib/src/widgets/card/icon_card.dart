@@ -33,11 +33,8 @@ class IconCard extends StatelessWidget {
             ],
             gradient: LinearGradient(
               colors: [
-                Theme.of(context).colorScheme.primary.withOpacity(0.3),
-                Theme.of(context).colorScheme.primary.withOpacity(0.6),
-                Theme.of(context).colorScheme.primary.withOpacity(0.4),
-                Theme.of(context).colorScheme.primary.withOpacity(0.3),
-                Theme.of(context).colorScheme.primary.withOpacity(0.3),
+                Theme.of(context).colorScheme.primary.withOpacity(0.8),
+                Theme.of(context).colorScheme.primary,
               ],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -52,12 +49,12 @@ class IconCard extends StatelessWidget {
               Icon(
                 icon,
                 size: iconSize,
-                color: GlobalColor.text,
+                color: Colors.white,
               ),
               Text(
                 text,
-                style: TextStyle(
-                  color: GlobalColor.text,
+                style: const TextStyle(
+                  color: Colors.white,
                   fontSize: 12,
                 ),
               ),

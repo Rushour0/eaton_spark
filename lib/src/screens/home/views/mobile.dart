@@ -1,6 +1,8 @@
 import 'package:eaton_spark/src/bloc/home/bloc.dart';
+import 'package:eaton_spark/src/globals/colors.dart';
 
 import 'package:eaton_spark/src/screens/home/tabs/mobile/dashboard.dart';
+import 'package:eaton_spark/src/screens/home/tabs/mobile/stations.dart';
 import 'package:eaton_spark/src/widgets/appbar/appbar.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
@@ -22,63 +24,28 @@ class MainMobile extends StatelessWidget {
         },
         builder: (context, state) {
           return Scaffold(
+            appBar: CustomAppbar(title: ''),
             extendBodyBehindAppBar: false,
             extendBody: false,
-
             body: IndexedStack(
               index: state.mode.index,
               children: [
                 Dashboard(),
+                StationsTab(),
                 Container(
                   color: Colors.blue,
                 ),
                 Container(
-                  color: Colors.green,
+                  color: Colors.red,
                 ),
                 // HomeView(),
                 // StationsView(),
                 // SearchView(),
               ],
             ),
-
-            // floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
-            // floatingActionButtonLocation:
-            //     FloatingActionButtonLocation.endDocked,
-            // floatingActionButton: Padding(
-            //   padding: EdgeInsets.only(bottom: screenHeight * 0.08),
-            //   child: CircularMenu(
-            //     alignment: Alignment.bottomRight,
-            //     toggleButtonColor: GlobalColor.primary,
-            //     toggleButtonIconColor: Colors.white,
-            //     toggleButtonSize: 36,
-            //     toggleButtonBoxShadow: [],
-            //     radius: 100,
-            //     items: [
-            //       CircularMenuItem(
-            //           icon: Icons.add,
-            //           color: Colors.green,
-            //           boxShadow: [],
-            //           onTap: () {
-            //             //callback
-            //           }),
-            //       CircularMenuItem(
-            //           icon: Icons.schedule,
-            //           badgeTextColor: GlobalColor.text,
-            //           boxShadow: [],
-            //           onTap: () {
-            //             //callback
-            //           }),
-            //       CircularMenuItem(
-            //           icon: Icons.pages,
-            //           boxShadow: [],
-            //           onTap: () {
-            //             //callback
-            //           }),
-            //     ],
-            //   ),
-            // ),
-            
             bottomNavigationBar: BottomNavigationBar(
+              type: BottomNavigationBarType.fixed,
+              selectedItemColor: GlobalColor.primary,
               currentIndex: state.mode.index,
               onTap: (index) {
                 HomeTabBloc().changeHomeTab(index);
@@ -89,13 +56,17 @@ class MainMobile extends StatelessWidget {
                   label: 'Home',
                 ),
                 BottomNavigationBarItem(
+                  icon: Icon(Icons.ev_station),
+                  label: 'Stations',
+                ),
+                BottomNavigationBarItem(
                   icon: Icon(Icons.history),
                   label: 'Activity',
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.ev_station),
-                  label: 'Stations',
-                ),
+                  icon: Icon(Icons.person),
+                  label: 'Profile',
+                )
               ],
             ),
           );

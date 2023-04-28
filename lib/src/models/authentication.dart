@@ -15,8 +15,11 @@ class AuthenticationModel {
   static AuthenticationService service = AuthenticationService();
   static DatabaseService dbService = DatabaseService();
 
-  static Stream<UserModel> getCurrentUser() {
-    return service.retrieveCurrentUser();
+  static Stream<User?> getCurrentUser() async* {
+    while (true) {
+      yield FirebaseAuth.instance.currentUser;
+    }
+    // return service.retrieveCurrentUser();
   }
 
   static Future<UserCredential?> signUp(

@@ -7,8 +7,8 @@ class ArticleCard extends StatelessWidget {
     required this.subtitle,
     required this.image,
     required this.onTap,
-    this.imageHeight = 100,
-    this.imageWidth = 150,
+    this.imageHeight = 125,
+    this.imageWidth = 170,
   }) : super(key: key);
 
   final String title;
@@ -20,7 +20,6 @@ class ArticleCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      
       onTap: onTap,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -38,12 +37,12 @@ class ArticleCard extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: Text(
               title,
-              style: Theme.of(context).textTheme.bodySmall,
+              style: Theme.of(context).textTheme.titleSmall,
             ),
           ),
           Text(
             subtitle,
-            style: Theme.of(context).textTheme.labelSmall,
+            style: Theme.of(context).textTheme.bodySmall,
           ),
         ],
       ),

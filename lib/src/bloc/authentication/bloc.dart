@@ -1,4 +1,5 @@
 import 'package:eaton_spark/src/models/user.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:equatable/equatable.dart';
@@ -9,23 +10,31 @@ part 'state.dart';
 
 class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
-  AuthenticationBloc() : super(AuthenticationInitial()) {
+  AuthenticationBloc()
+      : super(AuthenticationInitial(
+            isLoggedIn: FirebaseAuth.instance.currentUser != null)) {
     on<AuthenticationEvent>((event, emit) async {
-      if (event is AuthenticationStarted) {
-        UserModel user = await AuthenticationModel.getCurrentUser().first;
-        if (user.uid != "uid") {
-          String? displayName = await AuthenticationModel.retrieveUserName();
-          emit(AuthenticationSuccess(displayName: displayName));
+      if (_isLoggedIn) {
+        emit(const AuthenticationSuccess());
+      } else if (event is AuthenticationStarted) {
+        User? user = await AuthenticationModel.getCurrentUser().first;
+        if (user != null) {
+          _isLoggedIn = FirebaseAuth.instance.currentUser != null;
+          emit(const AuthenticationSuccess());
         } else {
-          emit(AuthenticationFailure());
+          _isLoggedIn = FirebaseAuth.instance.currentUser != null;
+          emit(const AuthenticationFailure());
         }
       } else if (event is AuthenticationSignedOut) {
-        emit(AuthenticationLogOut());
+        _isLoggedIn = FirebaseAuth.instance.currentUser != null;
+        emit(const AuthenticationLogOut());
       }
     });
   }
 
-  bool get isLoggedIn => true;
+  bool _isLoggedIn = FirebaseAuth.instance.currentUser != null;
+
+  bool get isLoggedIn => _isLoggedIn;
 
   Future<void> loginStarted() async {
     add(AuthenticationStarted());
