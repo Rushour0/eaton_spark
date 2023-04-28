@@ -2,7 +2,7 @@ part of 'bloc.dart';
 
 class HomeTabState extends Equatable {
   const HomeTabState({
-    this.mode = HomeTabMode.home,
+    this.mode = HomeTabMode.dashboard,
   });
 
   final HomeTabMode mode;

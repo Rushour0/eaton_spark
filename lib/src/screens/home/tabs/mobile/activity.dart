@@ -5,10 +5,18 @@ class ActivityTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return Center(
+      child: Container(
+        child: Text(
+          'Coming soon!',
+          style: TextStyle(fontSize: 24),
+        ),
+      ),
+    );
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
-          children: [],
+          children: [Text('Activity Tab'), Text('Coming soon!')],
         ),
       ),
     );

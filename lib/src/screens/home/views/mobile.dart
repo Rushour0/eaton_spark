@@ -1,7 +1,9 @@
 import 'package:eaton_spark/src/bloc/home/bloc.dart';
 import 'package:eaton_spark/src/globals/colors.dart';
+import 'package:eaton_spark/src/screens/home/tabs/mobile/activity.dart';
 
 import 'package:eaton_spark/src/screens/home/tabs/mobile/dashboard.dart';
+import 'package:eaton_spark/src/screens/home/tabs/mobile/profile.dart';
 import 'package:eaton_spark/src/screens/home/tabs/mobile/stations.dart';
 import 'package:eaton_spark/src/widgets/appbar/appbar.dart';
 import 'package:flutter/material.dart';
@@ -29,18 +31,11 @@ class MainMobile extends StatelessWidget {
             extendBody: false,
             body: IndexedStack(
               index: state.mode.index,
-              children: [
+              children: const [
                 Dashboard(),
                 StationsTab(),
-                Container(
-                  color: Colors.blue,
-                ),
-                Container(
-                  color: Colors.red,
-                ),
-                // HomeView(),
-                // StationsView(),
-                // SearchView(),
+                ActivityTab(),
+                ProfileTab(),
               ],
             ),
             bottomNavigationBar: BottomNavigationBar(

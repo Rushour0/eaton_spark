@@ -1,4 +1,5 @@
 import 'package:eaton_spark/src/bloc/authentication/bloc.dart';
+import 'package:eaton_spark/src/globals/colors.dart';
 import 'package:eaton_spark/src/widgets/appbar/appbar.dart';
 import 'package:eaton_spark/src/widgets/card/article_card.dart';
 import 'package:eaton_spark/src/widgets/card/icon_card.dart';
@@ -46,14 +47,36 @@ class Dashboard extends StatelessWidget {
               ),
               const Padding(
                 padding: EdgeInsets.fromLTRB(16, 8, 16, 0),
-                child: Text(
-                  'Find Your Charge!',
+                child: Text.rich(
+                  TextSpan(
+                    text: 'Find Your ',
+                    children: [
+                      TextSpan(
+                        text: 'Charge',
+                        style: TextStyle(
+                          color: GlobalColor.secondary,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      TextSpan(
+                        text: '⚡',
+                        style: TextStyle(
+                          color: Colors.amber,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                    style: TextStyle(
+                      fontSize: 72,
+                    ),
+                  ),
                   style: TextStyle(
                     fontSize: 72,
                   ),
                 ),
               ),
               HorizontalSection(
+                verticalPadding: 24,
                 height: 70,
                 title: 'Suggestions',
                 scrollable: false,
@@ -84,6 +107,7 @@ class Dashboard extends StatelessWidget {
                 title: 'Nearby Stations',
                 scrollable: true,
                 height: 175,
+                verticalPadding: 24,
                 rightPadding: 24,
                 children: [
                   'assets/images/stations.jpeg',
@@ -104,6 +128,7 @@ class Dashboard extends StatelessWidget {
                 title: 'About Us',
                 scrollable: true,
                 height: 175,
+                verticalPadding: 24,
                 rightPadding: 24,
                 children: [
                   'assets/images/car-charge.jpeg',
