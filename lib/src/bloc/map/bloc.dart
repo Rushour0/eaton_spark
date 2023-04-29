@@ -37,14 +37,11 @@ class GoogleMapBloc extends Bloc<GoogleMapEvent, GoogleMapState> {
   void _mapInitialized() async {
     changeMap(GoogleMapStatus.loading);
 
-    GoogleMapService().currentLocation().then((value) {
+    GoogleMapService.currentLatLng().then((value) {
       GoogleMapService.controller!.animateCamera(
         CameraUpdate.newCameraPosition(
           CameraPosition(
-            target: LatLng(
-              value.latitude,
-              value.longitude,
-            ),
+            target: value,
             zoom: 15,
           ),
         ),

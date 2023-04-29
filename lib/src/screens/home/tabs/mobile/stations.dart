@@ -90,14 +90,11 @@ class StationsTab extends StatelessWidget {
             onPressed: () {
               BlocProvider.of<GoogleMapBloc>(context)
                   .changeMap(GoogleMapStatus.loading);
-              GoogleMapService().currentLocation().then((value) {
+              GoogleMapService.currentLatLng().then((value) {
                 GoogleMapService.controller!.animateCamera(
                   CameraUpdate.newCameraPosition(
                     CameraPosition(
-                      target: LatLng(
-                        value.latitude,
-                        value.longitude,
-                      ),
+                      target: value,
                       zoom: 15,
                     ),
                   ),
