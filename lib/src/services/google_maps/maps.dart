@@ -23,7 +23,17 @@ class GoogleMapService {
 
   static Set<Marker> get markers => _markers;
 
+  static BitmapDescriptor? stationIcon;
+
   static Future<Position> _currentLocation() async {
+    stationIcon = await BitmapDescriptor.fromAssetImage(
+      ImageConfiguration(
+        size: Size(4, 4),
+        devicePixelRatio: 0.1,
+      ),
+      'assets/images/small-icon-station.png',
+      mipmaps: false,
+    );
     bool serviceEnabled;
     LocationPermission permission;
 
@@ -67,18 +77,19 @@ class GoogleMapService {
     }
     final MapPlacesNearby placesNearby = MapPlacesNearby.fromJson(json);
 
-    _markers.addAll(placesNearby.results!.map((mapPlace) {
-      return Marker(
-        markerId: MarkerId(mapPlace.vicinity),
-        position: mapPlace.geometry.location.latlng,
-        // icon: BitmapDescriptor.fromBytes(),
-
-        infoWindow: InfoWindow(
-          title: mapPlace.name,
-          snippet: mapPlace.vicinity,
+    for (MapPlace mapPlace in placesNearby.results!) {
+      _markers.add(
+        Marker(
+          markerId: MarkerId(mapPlace.vicinity),
+          position: mapPlace.geometry.location.latlng,
+          icon: stationIcon!,
+          infoWindow: InfoWindow(
+            title: mapPlace.name,
+            snippet: mapPlace.vicinity,
+          ),
         ),
       );
-    }).toSet());
+    }
     GoogleMapBloc().changeMap(GoogleMapStatus.loaded);
     GoogleMapBloc().addedMarkers();
 

@@ -90,6 +90,7 @@ class StationsTab extends StatelessWidget {
             ],
           ),
         ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
         floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
         floatingActionButton: BlocBuilder<GoogleMapBloc, GoogleMapState>(
             buildWhen: (previous, current) {
