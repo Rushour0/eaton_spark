@@ -1,3 +1,7 @@
+import 'package:eaton_spark/src/bloc/map/bloc.dart';
+import 'package:eaton_spark/src/models/map.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:geolocator_android/geolocator_android.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -5,9 +9,19 @@ import 'package:eaton_spark/src/models/map_data_handler/map_data_handler.dart';
 import 'package:eaton_spark/src/services/google_maps/api.dart';
 
 class GoogleMapService {
+  GoogleMapService._internal();
+
+  static final GoogleMapService _instance = GoogleMapService._internal();
+
+  factory GoogleMapService() => _instance;
+
   static final GeolocatorAndroid _geolocatorAndroid = GeolocatorAndroid();
 
   static GoogleMapController? controller;
+
+  static Set<Marker> _markers = {};
+
+  static Set<Marker> get markers => _markers;
 
   static Future<Position> _currentLocation() async {
     bool serviceEnabled;
@@ -36,20 +50,38 @@ class GoogleMapService {
   }
 
   static Future<MapPlacesNearby> stationsNearby() async {
-    LatLng currentPosition = await currentLatLng();
-    List<LatLng> stations = [];
-    Map<String, dynamic>? json = await MapsAPIService.makeJsonPost(
+    GoogleMapBloc().changeMap(GoogleMapStatus.searching);
+    Map<String, dynamic> json = {};
+    final LatLng currentPosition = await currentLatLng();
+    try {
+      json = await MapsAPIService.makeJsonPost(
         route: MapRoutes.places_nearby,
         body: {
           "location": [currentPosition.latitude, currentPosition.longitude],
           "radius": 10000, // in meters
           "keyword": "EV Stations", // search keyword
-        });
-    MapPlacesNearby placesNearby = MapPlacesNearby.fromJson(json!);
-    placesNearby.results?.forEach((element) {
-      stations.add(
-          LatLng(element.geometry.location.lat, element.geometry.location.lng));
-    });
+        },
+      );
+    } on Exception catch (e) {
+      print('Fetching Nearby Stations failed with error: $e');
+    }
+    final MapPlacesNearby placesNearby = MapPlacesNearby.fromJson(json);
+
+    _markers.addAll(placesNearby.results!.map((mapPlace) {
+      return Marker(
+        markerId: MarkerId(mapPlace.vicinity),
+        position: mapPlace.geometry.location.latlng,
+        // icon: BitmapDescriptor.fromBytes(),
+
+        infoWindow: InfoWindow(
+          title: mapPlace.name,
+          snippet: mapPlace.vicinity,
+        ),
+      );
+    }).toSet());
+    GoogleMapBloc().changeMap(GoogleMapStatus.loaded);
+    GoogleMapBloc().addedMarkers();
+
     return placesNearby;
   }
 

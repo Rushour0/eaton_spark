@@ -4,26 +4,26 @@ class MapPlace {
   const MapPlace({
     required this.name,
     required this.icon,
-    required this.address,
+    required this.vicinity,
     required this.geometry,
   });
 
   final String name;
-  final String address;
-  final Uri icon;
+  final String vicinity;
+  final String icon;
   final MapGeometry geometry;
 
   Map<String, dynamic> toJson() => {
         "name": name,
-        "icon": icon.toString(),
-        "address": address,
+        "icon": icon,
+        "vicinity": vicinity,
         "geometry": geometry.toJson(),
       };
 
   factory MapPlace.fromJson(Map<String, dynamic> json) => MapPlace(
         name: json["name"],
-        icon: Uri.parse(json["icon"]),
-        address: json["address"],
+        icon: json["icon"],
+        vicinity: json["vicinity"],
         geometry: MapGeometry.fromJson(json["geometry"]),
       );
 }

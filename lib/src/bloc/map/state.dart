@@ -1,17 +1,11 @@
 part of 'bloc.dart';
 
-class GoogleMapState extends Equatable {
+abstract class GoogleMapState extends Equatable {
   const GoogleMapState({
     this.status = GoogleMapStatus.searching,
   });
 
   final GoogleMapStatus status;
-
-  GoogleMapState copyWith({GoogleMapStatus? status, LatLng? position}) {
-    return GoogleMapState(
-      status: status ?? this.status,
-    );
-  }
 
   @override
   String toString() {
@@ -28,6 +22,21 @@ class GoogleMapInitial extends GoogleMapState {
 
 class GoogleMapLoaded extends GoogleMapState {
   const GoogleMapLoaded();
+}
+
+class GoogleMapMarkersChanged extends GoogleMapState {
+  const GoogleMapMarkersChanged({
+    required this.markers,
+  }) : super();
+  final Set<Marker> markers;
+
+  @override
+  String toString() {
+    return '''GoogleMapMarkersChanged { markers: $markers }''';
+  }
+
+  @override
+  List<Object?> get props => [markers];
 }
 
 class GoogleMapSearching extends GoogleMapState {

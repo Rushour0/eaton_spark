@@ -18,11 +18,11 @@ class StationsTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-          create: (_) => GoogleMapBloc(),
+        BlocProvider<GoogleMapBloc>.value(
+          value: GoogleMapBloc(),
         ),
-        BlocProvider(
-          create: (_) => AuthenticationBloc(),
+        BlocProvider<AuthenticationBloc>.value(
+          value: AuthenticationBloc(),
         ),
       ],
       child: Scaffold(
@@ -96,6 +96,7 @@ class StationsTab extends StatelessWidget {
           if (previous is GoogleMapInitial) {
             return true;
           }
+
           return false;
         }, builder: (context, state) {
           return FloatingActionButton(
@@ -120,12 +121,12 @@ class StationsTab extends StatelessWidget {
         }),
         body: BlocBuilder<GoogleMapBloc, GoogleMapState>(
             buildWhen: (previous, current) {
-          if (previous is GoogleMapInitial) {
+          if (previous is GoogleMapMarkersChanged) {
             return true;
           }
           return false;
         }, builder: (context, state) {
-          return const CurveEdgeMap();
+          return CurveEdgeMap();
         }),
       ),
     );

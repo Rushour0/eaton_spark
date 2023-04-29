@@ -12,31 +12,36 @@ class GoogleMapBloc extends Bloc<GoogleMapEvent, GoogleMapState> {
   static final GoogleMapBloc _instance = GoogleMapBloc._internal();
   factory GoogleMapBloc() => _instance;
 
-  GoogleMapBloc._internal() : super(const GoogleMapState()) {
-    on<GoogleMapChanged>(_onMapChanged);
+  GoogleMapBloc._internal() : super(const GoogleMapInitial()) {
+    on<GoogleMapEvent>(_onMapChanged);
     _mapInitialized();
   }
 
-  void _onMapChanged(
-      GoogleMapChanged event, Emitter<GoogleMapState> emit) async {
-    if (event is GoogleMapLoaded) {
-      emit(state.copyWith(
-        status: _status,
-        position: _position,
-      ));
-      return;
+  void _onMapChanged(GoogleMapEvent event, Emitter<GoogleMapState> emit) async {
+    if (event is GoogleMapInitializing) {
+      emit(
+        GoogleMapInitial(),
+      );
+    } else if (event is GoogleMapSearchStarted) {
+      emit(
+        GoogleMapSearching(),
+      );
+    } else if (event is GoogleMapMarkersAdded) {
+      emit(
+        GoogleMapMarkersChanged(
+          markers: GoogleMapService.markers,
+        ),
+      );
     }
-
     emit(
-      state.copyWith(
-        status: _status,
-      ),
+      GoogleMapLoaded(),
     );
   }
 
   void _mapInitialized() async {
-    changeMap(GoogleMapStatus.loading);
-
+    changeMap(
+      GoogleMapStatus.loading,
+    );
     GoogleMapService.currentLatLng().then((value) {
       GoogleMapService.controller!.animateCamera(
         CameraUpdate.newCameraPosition(
@@ -46,18 +51,27 @@ class GoogleMapBloc extends Bloc<GoogleMapEvent, GoogleMapState> {
           ),
         ),
       );
-      changeMap(
-        GoogleMapStatus.loaded,
-      );
+
+      GoogleMapService.stationsNearby();
     });
   }
 
   static GoogleMapStatus _status = GoogleMapStatus.searching;
   static LatLng? _position;
 
+  void addedMarkers() async {
+    add(GoogleMapMarkersAdded());
+  }
+
   void changeMap(GoogleMapStatus status) {
     _status = status;
-
+    if (status == GoogleMapStatus.loaded) {
+      add(GoogleMapChanged());
+    } else if (status == GoogleMapStatus.searching) {
+      add(GoogleMapSearchStarted());
+    } else if (status == GoogleMapStatus.loading) {
+      add(GoogleMapInitializing());
+    }
     add(GoogleMapChanged());
   }
 }

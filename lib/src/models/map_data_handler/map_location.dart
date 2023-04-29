@@ -5,8 +5,8 @@ class MapLocation {
     required this.latlng,
   });
 
-  get lat => latlng.latitude;
-  get lng => latlng.longitude;
+  double get lat => latlng.latitude;
+  double get lng => latlng.longitude;
 
   final LatLng latlng;
   MapLocation.fromJson(Map<String, dynamic> json)

@@ -14,7 +14,15 @@ class CurveEdgeMap extends StatelessWidget {
         zoomControlsEnabled: false,
         myLocationEnabled: true,
         myLocationButtonEnabled: false,
+        tileOverlays: Set<TileOverlay>.of(
+          [
+            TileOverlay(
+              tileOverlayId: const TileOverlayId("map_style"),
+            ),
+          ],
+        ),
         buildingsEnabled: true,
+        markers: GoogleMapService.markers,
         initialCameraPosition: const CameraPosition(
           target: LatLng(0, 0),
         ),

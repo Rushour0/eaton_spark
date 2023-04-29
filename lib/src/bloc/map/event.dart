@@ -6,3 +6,9 @@ abstract class GoogleMapEvent extends Equatable {
 }
 
 class GoogleMapChanged extends GoogleMapEvent {}
+
+class GoogleMapInitializing extends GoogleMapEvent {}
+
+class GoogleMapMarkersAdded extends GoogleMapEvent {}
+
+class GoogleMapSearchStarted extends GoogleMapEvent {}

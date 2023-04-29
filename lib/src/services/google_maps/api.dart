@@ -10,7 +10,7 @@ class MapsAPIService {
   static final MapsAPIService _instance = MapsAPIService._internal();
   factory MapsAPIService() => _instance;
 
-  static Future<Map<String, dynamic>?> makeJsonPost(
+  static Future<Map<String, dynamic>> makeJsonPost(
       {required MapRoutes route, required Map<String, dynamic> body}) async {
     http.Response response = await http.post(
       Uri.parse(_BASE_URL + route.name),

@@ -25,8 +25,8 @@ class Dashboard extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
-              BlocProvider(
-                create: (_) => AuthenticationBloc(),
+              BlocProvider.value(
+                value: AuthenticationBloc(),
                 child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
                   builder: (context, state) {
                     if (state.isLoggedIn) {

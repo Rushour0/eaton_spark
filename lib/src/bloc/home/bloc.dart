@@ -27,7 +27,7 @@ class HomeTabBloc extends Bloc<HomeTabEvent, HomeTabState> {
     add(HomeTabChanged());
   }
 
-  static HomeTabMode _mode = HomeTabMode.dashboard;
+  static HomeTabMode _mode = HomeTabMode.stations;
 
   void changeHomeTab(int index) {
     _mode = HomeTabMode.values[index];

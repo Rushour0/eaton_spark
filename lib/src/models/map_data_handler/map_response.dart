@@ -16,9 +16,9 @@ class MapPlacesNearby extends MapResponse {
       : htmlAttributions = json["html_attributions"],
         nextPageToken = json["next_page_token"],
         results = List<MapPlace>.from(
-          json["results"]
-              .map((mapPlace) => MapPlace.fromJson(jsonDecode(mapPlace)))
-              .toList(),
+          json["results"].map((mapPlace) {
+            return MapPlace.fromJson(mapPlace);
+          }).toList(),
         );
 
   @override

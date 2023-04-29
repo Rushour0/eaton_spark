@@ -13,12 +13,6 @@ class ActivityTab extends StatelessWidget {
         ),
       ),
     );
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [Text('Activity Tab'), Text('Coming soon!')],
-        ),
-      ),
-    );
+
   }
 }
