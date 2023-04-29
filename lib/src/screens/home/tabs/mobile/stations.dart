@@ -2,6 +2,7 @@ import 'package:eaton_spark/src/bloc/authentication/bloc.dart';
 import 'package:eaton_spark/src/bloc/map/bloc.dart';
 import 'package:eaton_spark/src/globals/colors.dart';
 import 'package:eaton_spark/src/models/map.dart';
+
 import 'package:eaton_spark/src/services/google_maps/maps.dart';
 
 import 'package:eaton_spark/src/widgets/map/curved_map.dart';

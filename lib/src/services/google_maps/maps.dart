@@ -1,14 +1,10 @@
-import 'package:eaton_spark/src/services/google_maps/api/api.dart';
 import 'package:geolocator_android/geolocator_android.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import 'package:eaton_spark/src/models/map_data_handler/map_data_handler.dart';
+import 'package:eaton_spark/src/services/google_maps/api.dart';
+
 class GoogleMapService {
-  GoogleMapService._internal();
-
-  static final GoogleMapService _instance = GoogleMapService._internal();
-
-  factory GoogleMapService() => _instance;
-
   static final GeolocatorAndroid _geolocatorAndroid = GeolocatorAndroid();
 
   static GoogleMapController? controller;
@@ -39,17 +35,22 @@ class GoogleMapService {
     return await _geolocatorAndroid.getCurrentPosition();
   }
 
-  static Future<Map<String, dynamic>> stationsNearby() async {
+  static Future<MapPlacesNearby> stationsNearby() async {
     LatLng currentPosition = await currentLatLng();
     List<LatLng> stations = [];
-    Map<String, dynamic>? json =
-        await MapsAPI.makeJsonPost(route: MapRoutes.places_nearby, body: {
-      "location": [currentPosition.latitude, currentPosition.longitude],
-      "radius": 10000, // in meters
-      "keyword": "EV Stations", // search keyword
+    Map<String, dynamic>? json = await MapsAPIService.makeJsonPost(
+        route: MapRoutes.places_nearby,
+        body: {
+          "location": [currentPosition.latitude, currentPosition.longitude],
+          "radius": 10000, // in meters
+          "keyword": "EV Stations", // search keyword
+        });
+    MapPlacesNearby placesNearby = MapPlacesNearby.fromJson(json!);
+    placesNearby.results?.forEach((element) {
+      stations.add(
+          LatLng(element.geometry.location.lat, element.geometry.location.lng));
     });
-    print(json);
-    return json ?? {};
+    return placesNearby;
   }
 
   static Future<LatLng> currentLatLng() async {
