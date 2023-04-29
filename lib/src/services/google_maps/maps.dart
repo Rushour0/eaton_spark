@@ -1,4 +1,4 @@
-import 'package:eaton_spark/src/services/google_maps/api.dart';
+import 'package:eaton_spark/src/services/google_maps/api/api.dart';
 import 'package:geolocator_android/geolocator_android.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -40,7 +40,15 @@ class GoogleMapService {
   }
 
   static Future<Map<String, dynamic>> stationsNearby() async {
-    Map<String, dynamic>? json = await MapsAPI.makeJsonPost(body: {});
+    LatLng currentPosition = await currentLatLng();
+    List<LatLng> stations = [];
+    Map<String, dynamic>? json =
+        await MapsAPI.makeJsonPost(route: MapRoutes.places_nearby, body: {
+      "location": [currentPosition.latitude, currentPosition.longitude],
+      "radius": 10000, // in meters
+      "keyword": "EV Stations", // search keyword
+    });
+    print(json);
     return json ?? {};
   }
 

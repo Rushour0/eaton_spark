@@ -63,15 +63,26 @@ class StationsTab extends StatelessWidget {
                   return const Text('You are not logged in');
                 },
               ),
-              const Align(
+              Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
                   padding: EdgeInsets.fromLTRB(16, 8, 16, 0),
-                  child: Text(
-                    'Stations',
-                    style: TextStyle(
-                      fontSize: 48,
-                    ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'Stations',
+                        style: TextStyle(
+                          fontSize: 48,
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () async {
+                          await GoogleMapService.stationsNearby();
+                        },
+                        icon: const Icon(Icons.ev_station),
+                      ),
+                    ],
                   ),
                 ),
               ),
