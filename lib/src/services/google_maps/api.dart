@@ -11,8 +11,7 @@ class MapsAPIService {
   MapsAPIService._internal();
   static final MapsAPIService _instance = MapsAPIService._internal();
   factory MapsAPIService() => _instance;
-
-  static Future<Map<String, dynamic>> makeJsonPost(
+  Future<Map<String, dynamic>> makeJsonPost(
       {required MapRoutes route, required Map<String, dynamic> body}) async {
     http.Response response = await http.post(
       Uri.parse(_BASE_URL + route.name),
@@ -21,7 +20,14 @@ class MapsAPIService {
       },
       body: jsonEncode(body),
     );
+    print(response.body);
+    dynamic result;
 
-    return jsonDecode(response.body) as Map<String, dynamic>;
+    try {
+      result = jsonDecode(response.body) as Map<String, dynamic>;
+    } on Exception catch (e) {
+      result = {'data': response.body};
+    }
+    return result;
   }
 }

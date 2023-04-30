@@ -28,8 +28,8 @@ def places_nearby():
 def directions():
     post_json = request.get_json()
 
-    gmaps.directions(
-        source=post_json['source'],
+    return gmaps.directions(
+        origin=post_json['source'],
         destination=post_json['destination'],
         mode=post_json['mode'], 
         departure_time=post_json['departure_time'],

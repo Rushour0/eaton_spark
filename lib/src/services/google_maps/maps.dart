@@ -44,7 +44,7 @@ class GoogleMapService {
     Map<String, dynamic> json = {};
 
     try {
-      json = await MapsAPIService.makeJsonPost(
+      json = await MapsAPIService().makeJsonPost(
         route: MapRoutes.directions,
         body: {
           "source": [source.latitude, source.longitude],
@@ -131,7 +131,7 @@ class GoogleMapService {
     Map<String, dynamic> json = {};
     final LatLng currentPosition = await currentLatLng();
     try {
-      json = await MapsAPIService.makeJsonPost(
+      json = await MapsAPIService().makeJsonPost(
         route: MapRoutes.places_nearby,
         body: {
           "location": [currentPosition.latitude, currentPosition.longitude],

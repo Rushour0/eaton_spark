@@ -71,7 +71,7 @@ class ActivityTab extends StatelessWidget {
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
         floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
         floatingActionButton: FloatingActionButton(
-          heroTag: 'same',
+          heroTag: 'activity',
           onPressed: () {},
           child: const Icon(Icons.add),
         ),

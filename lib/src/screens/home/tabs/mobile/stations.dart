@@ -101,7 +101,7 @@ class StationsTab extends StatelessWidget {
           return false;
         }, builder: (context, state) {
           return FloatingActionButton(
-            heroTag: 'same',
+            heroTag: 'stations',
             onPressed: () {
               BlocProvider.of<GoogleMapBloc>(context)
                   .changeMap(GoogleMapStatus.loading);
