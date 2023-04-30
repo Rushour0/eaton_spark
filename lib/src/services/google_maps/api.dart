@@ -25,8 +25,9 @@ class MapsAPIService {
 
     try {
       result = jsonDecode(response.body) as Map<String, dynamic>;
-    } on Exception catch (e) {
-      result = {'data': response.body};
+    } catch (e) {
+      print('Error decoding response body: $e');
+      result = {'data': jsonDecode(response.body) as List<dynamic>};
     }
     return result;
   }

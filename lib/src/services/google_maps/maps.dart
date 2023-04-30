@@ -60,7 +60,7 @@ class GoogleMapService {
 
     print(json);
 
-    final MapPolylines mapPolylines = MapPolylines.fromJson(json);
+    final MapPolylines mapPolylines = MapPolylines.fromJson(json['data']);
 
     _markers.addAll([
       Marker(
