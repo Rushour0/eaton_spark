@@ -33,8 +33,8 @@ class GoogleMapService {
   static BitmapDescriptor? stationIcon;
 
   static Future<void> getRoute({
-    required LatLng source,
-    required LatLng destination,
+    required dynamic source,
+    required dynamic destination,
     TravelMode mode = TravelMode.driving,
     List<String> waypoints = const ["via:Nearest EV Stations"],
     String departureTime = 'now',
@@ -42,18 +42,22 @@ class GoogleMapService {
     GoogleMapBloc().changeMap(GoogleMapStatus.searching);
 
     Map<String, dynamic> json = {'data': 0};
-
+    if (source == "current") {
+      source = await GoogleMapService.currentLatLng();
+    }
     try {
       json['data'] = await MapsAPIService.makeJsonPost(
         route: MapRoutes.directions,
         body: {
-          "source": [source.latitude, source.longitude],
-          "destination": "Mumbai",
+          "source": source.runtimeType == String
+              ? source
+              : [source.latitude, source.longitude],
+          "destination": destination.runtimeType == String
+              ? destination
+              : [destination.latitude, destination.longitude],
           "mode": TravelMode.driving.name,
           "departure_time": departureTime,
-          "waypoints": [
-            [destination.latitude, destination.longitude]
-          ],
+          "waypoints": [],
           // _markers
           //     .map((e) => [e.position.latitude, e.position.longitude])
           //     .toList(), // search keyword
@@ -66,20 +70,6 @@ class GoogleMapService {
 
     final MapPolylines mapPolylines =
         MapPolylines.fromJson(json['data'][0]['overview_polyline']['points']);
-
-    _markers.clear();
-    _markers.addAll([
-      Marker(
-        markerId: MarkerId(source.toString()),
-        position: source,
-        icon: BitmapDescriptor.defaultMarker,
-      ),
-      Marker(
-        markerId: MarkerId(destination.toString()),
-        position: destination,
-        icon: stationIcon!,
-      ),
-    ]);
 
     _polylines.clear();
     _polylines.add(
@@ -95,6 +85,20 @@ class GoogleMapService {
           ),
         ),
       );
+
+      _markers.clear();
+      _markers.addAll([
+        Marker(
+          markerId: MarkerId(source.toString()),
+          position: source,
+          icon: BitmapDescriptor.defaultMarker,
+        ),
+        Marker(
+          markerId: MarkerId(destination.toString()),
+          position: destination,
+          icon: stationIcon!,
+        ),
+      ]);
     });
 
     GoogleMapBloc().routingMode();

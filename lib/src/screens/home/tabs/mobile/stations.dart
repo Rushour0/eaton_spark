@@ -100,26 +100,46 @@ class StationsTab extends StatelessWidget {
 
           return false;
         }, builder: (context, state) {
-          return FloatingActionButton(
-            heroTag: 'stations',
-            onPressed: () {
-              BlocProvider.of<GoogleMapBloc>(context)
-                  .changeMap(GoogleMapStatus.loading);
-              GoogleMapService.currentLatLng().then((value) {
-                GoogleMapService.controller!.animateCamera(
-                  CameraUpdate.newCameraPosition(
-                    CameraPosition(
-                      target: value,
-                      zoom: 15,
-                    ),
-                  ),
+          return Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                FloatingActionButton(
+                  heroTag: 'stations',
+                  onPressed: () {
+                    BlocProvider.of<GoogleMapBloc>(context)
+                        .changeMap(GoogleMapStatus.loading);
+                    GoogleMapService.currentLatLng().then((value) {
+                      GoogleMapService.controller!.animateCamera(
+                        CameraUpdate.newCameraPosition(
+                          CameraPosition(
+                            target: value,
+                            zoom: 15,
+                          ),
+                        ),
+                      );
+                      BlocProvider.of<GoogleMapBloc>(context)
+                          .changeMap(GoogleMapStatus.loaded);
+                    });
+                  },
+                  child: const Icon(Icons.my_location),
+                ),
+                FloatingActionButton.extended(
+                  heroTag: 'go to mumbai',
+                  onPressed: () {
+                    GoogleMapService.getRoute(
+                        source: "current", destination: "mumbai");
+                  },
+                  label: const Text('Go To Mumbai'),
+                  icon: const Icon(Icons.add_road_rounded),
+                ),
+              ].map((e) {
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 16),
+                  child: e,
                 );
-                BlocProvider.of<GoogleMapBloc>(context)
-                    .changeMap(GoogleMapStatus.loaded);
-              });
-            },
-            child: const Icon(Icons.my_location),
-          );
+              }).toList());
         }),
         body: BlocBuilder<GoogleMapBloc, GoogleMapState>(
             buildWhen: (previous, current) {
