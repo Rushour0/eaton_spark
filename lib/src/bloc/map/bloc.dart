@@ -32,7 +32,14 @@ class GoogleMapBloc extends Bloc<GoogleMapEvent, GoogleMapState> {
           markers: GoogleMapService.markers,
         ),
       );
+    } else if (event is GoogleMapRouteMode) {
+      emit(
+        GoogleMapRouteActive(
+          polylines: GoogleMapService.polylines,
+        ),
+      );
     }
+
     emit(
       GoogleMapLoaded(),
     );
@@ -61,6 +68,10 @@ class GoogleMapBloc extends Bloc<GoogleMapEvent, GoogleMapState> {
   void addedMarkers() async {
     changeMap(GoogleMapStatus.loaded);
     add(GoogleMapMarkersAdded());
+  }
+
+  void routingMode() {
+    add(GoogleMapRouteMode());
   }
 
   void changeMap(GoogleMapStatus status) {

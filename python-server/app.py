@@ -23,15 +23,29 @@ def places_nearby():
         keyword=post_json['keyword']
     )
 
+
+@app.route('/directions', methods=['POST'])
+def directions():
+    post_json = request.get_json()
+
+    gmaps.directions(
+        source=post_json['source'],
+        destination=post_json['destination'],
+        mode=post_json['mode'], 
+        departure_time=post_json['departure_time'],
+    )
+
+
 @app.route('/autocomplete', methods=['POST'])
 def autocomplete():
     args = request.args
     return gmaps.places_autocomplete(args.get('input'))
 
+
 @app.route('/autocomplete_query', methods=['POST'])
 def autocomplete_query():
     args = request.args
-    
-    return gmaps.places_autocomplete_query( args.get('query'))
 
-app.run(host='0.0.0.0', port=81)
+    return gmaps.places_autocomplete_query(args.get('query'))
+
+# app.run(host='0.0.0.0', port=81)

@@ -43,6 +43,22 @@ class GoogleMapSearching extends GoogleMapState {
   const GoogleMapSearching() : super();
 }
 
+class GoogleMapRouteActive extends GoogleMapState {
+  const GoogleMapRouteActive({
+    required this.polylines,
+  }) : super();
+
+  final Set<Polyline> polylines;
+
+  @override
+  String toString() {
+    return '''GoogleMapRouting { polylines: $polylines }''';
+  }
+
+  @override
+  List<Object?> get props => [polylines];
+}
+
 class GoogleMapError extends GoogleMapState {
   const GoogleMapError() : super();
 }

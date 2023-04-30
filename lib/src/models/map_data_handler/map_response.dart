@@ -9,15 +9,15 @@ class MapPlacesNearby extends MapResponse {
 
   final List<dynamic>? htmlAttributions;
   final String? nextPageToken;
-  final List<MapPlace>? results;
+  final List<MapStation>? results;
 
   @override
   MapPlacesNearby.fromJson(Map<String, dynamic> json)
       : htmlAttributions = json["html_attributions"],
         nextPageToken = json["next_page_token"],
-        results = List<MapPlace>.from(
+        results = List<MapStation>.from(
           json["results"].map((mapPlace) {
-            return MapPlace.fromJson(mapPlace);
+            return MapStation.fromJson(mapPlace);
           }).toList(),
         );
 
@@ -26,6 +26,27 @@ class MapPlacesNearby extends MapResponse {
         "html_attributions": htmlAttributions,
         "next_page_token": nextPageToken,
         "results": results!.map((mapPlace) => mapPlace.toJson()).toList(),
+      };
+}
+
+class MapPolylines extends MapResponse {
+  const MapPolylines({
+    required this.polyline,
+  });
+
+  final Polyline polyline;
+
+  @override
+  MapPolylines.fromJson(Map<String, dynamic> json)
+      : polyline = Polyline(
+          polylineId: json["polyline"],
+          points: json["polyline"]["points"],
+          color: Colors.blue,
+        );
+
+  @override
+  Map<String, dynamic> toJson() => {
+        "polyline": polyline.toJson(),
       };
 }
 

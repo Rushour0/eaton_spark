@@ -94,13 +94,14 @@ class StationsTab extends StatelessWidget {
         floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
         floatingActionButton: BlocBuilder<GoogleMapBloc, GoogleMapState>(
             buildWhen: (previous, current) {
-          if (previous is GoogleMapInitial) { 
+          if (previous is GoogleMapInitial) {
             return true;
           }
 
           return false;
         }, builder: (context, state) {
           return FloatingActionButton(
+            heroTag: 'same',
             onPressed: () {
               BlocProvider.of<GoogleMapBloc>(context)
                   .changeMap(GoogleMapStatus.loading);
@@ -123,6 +124,8 @@ class StationsTab extends StatelessWidget {
         body: BlocBuilder<GoogleMapBloc, GoogleMapState>(
             buildWhen: (previous, current) {
           if (previous is GoogleMapMarkersChanged) {
+            return true;
+          } else if (current is GoogleMapRouteActive) {
             return true;
           }
           return false;

@@ -2,6 +2,7 @@ import 'package:eaton_spark/src/bloc/map/bloc.dart';
 import 'package:eaton_spark/src/models/map.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import 'package:geolocator_android/geolocator_android.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -21,12 +22,77 @@ class GoogleMapService {
 
   static Set<Marker> _markers = {};
 
+  static Set<Polyline> _polylines = {};
+
   static Set<Marker> get markers => _markers;
+
+  static Set<Polyline> get polylines => _polylines;
 
   static BitmapDescriptor? stationIcon;
 
+  static Future<void> getRoute({
+    required LatLng source,
+    required LatLng destination,
+    TravelMode mode = TravelMode.driving,
+    List<String> waypoints = const ["via:Nearest EV Stations"],
+    String departureTime = 'now',
+  }) async {
+    GoogleMapBloc().changeMap(GoogleMapStatus.searching);
+
+    _markers.clear();
+
+    Map<String, dynamic> json = {};
+
+    try {
+      json = await MapsAPIService.makeJsonPost(
+        route: MapRoutes.directions,
+        body: {
+          "source": [source.latitude, source.longitude],
+          "destination": [destination.latitude, destination.longitude],
+          "mode": TravelMode.driving.name,
+          "departure_time": departureTime,
+          "waypoints": [], // search keyword
+        },
+      );
+    } on Exception catch (e) {
+      print('Fetching Directions to selected station failed with error: $e');
+    }
+
+    print(json);
+
+    final MapPolylines mapPolylines = MapPolylines.fromJson(json);
+
+    _markers.addAll([
+      Marker(
+        markerId: MarkerId(source.toString()),
+        position: source,
+        icon: BitmapDescriptor.defaultMarker,
+      ),
+      Marker(
+        markerId: MarkerId(destination.toString()),
+        position: destination,
+        icon: stationIcon!,
+      ),
+    ]);
+    _polylines.clear();
+    // print(result.points);
+    // _polylines.add(
+    //   Polyline(
+    //     polylineId: PolylineId(source.toString()),
+    //     points: result.points
+    //         .map((PointLatLng point) => LatLng(point.latitude, point.longitude))
+    //         .toList(),
+    //     color: Colors.blue,
+    //     width: 4,
+    //   ),
+    // );
+
+    GoogleMapBloc().routingMode();
+    return;
+  }
+
   static Future<Position> _currentLocation() async {
-    stationIcon = await BitmapDescriptor.fromAssetImage(
+    stationIcon ??= await BitmapDescriptor.fromAssetImage(
       ImageConfiguration(
         size: Size(4, 4),
         devicePixelRatio: 0.1,
@@ -61,6 +127,7 @@ class GoogleMapService {
 
   static Future<MapPlacesNearby> stationsNearby() async {
     GoogleMapBloc().changeMap(GoogleMapStatus.searching);
+    _markers.clear();
     Map<String, dynamic> json = {};
     final LatLng currentPosition = await currentLatLng();
     try {
@@ -77,12 +144,17 @@ class GoogleMapService {
     }
     final MapPlacesNearby placesNearby = MapPlacesNearby.fromJson(json);
 
-    for (MapPlace mapPlace in placesNearby.results!) {
+    for (MapStation mapPlace in placesNearby.results!) {
       _markers.add(
         Marker(
           markerId: MarkerId(mapPlace.vicinity),
           position: mapPlace.geometry.location.latlng,
           icon: stationIcon!,
+          onTap: () async {
+            await getRoute(
+                source: currentPosition,
+                destination: mapPlace.geometry.location.latlng);
+          },
           infoWindow: InfoWindow(
             title: mapPlace.name,
             snippet: mapPlace.vicinity,

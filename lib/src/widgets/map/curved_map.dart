@@ -11,6 +11,7 @@ class CurveEdgeMap extends StatelessWidget {
       borderRadius: const BorderRadius.all(Radius.circular(30)),
       clipBehavior: Clip.antiAliasWithSaveLayer,
       child: GoogleMap(
+        polylines: GoogleMapService.polylines,
         zoomControlsEnabled: true,
         myLocationEnabled: true,
         myLocationButtonEnabled: false,
@@ -18,6 +19,7 @@ class CurveEdgeMap extends StatelessWidget {
         markers: GoogleMapService.markers,
         initialCameraPosition: const CameraPosition(
           target: LatLng(0, 0),
+          zoom: 0,
         ),
         onMapCreated: (GoogleMapController controller) {
           GoogleMapService.controller = controller;

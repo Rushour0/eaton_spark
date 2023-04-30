@@ -2,7 +2,9 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-enum MapRoutes { places_nearby, autocomplete, autocomplete_query }
+enum MapRoutes { places_nearby, autocomplete, autocomplete_query, directions }
+
+enum TravelMode { driving, walking, bicycling, transit }
 
 class MapsAPIService {
   static const String _BASE_URL = 'https://eaton-spark.loca.lt/';
