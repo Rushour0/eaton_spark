@@ -47,6 +47,7 @@ dependencies:
   flutter_svg: ^2.0.5
   google_maps_flutter: ^2.2.5
   geolocator: ^9.0.2
+  polyline_do: ^0.1.0
 
 dev_dependencies:
   flutter_test:

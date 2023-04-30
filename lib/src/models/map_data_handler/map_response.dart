@@ -37,11 +37,16 @@ class MapPolylines extends MapResponse {
   final Polyline polyline;
 
   @override
-  MapPolylines.fromJson(Map<String, dynamic> json)
+  MapPolylines.fromJson(String polylineEncoded)
       : polyline = Polyline(
-          polylineId: json["polyline"],
-          points: json["polyline"]["points"],
+          polylineId: PolylineId(polylineEncoded),
+          points: PolylineDo.Polyline.Decode(
+                  encodedString: polylineEncoded, precision: 5)
+              .decodedCoords
+              .map((e) => LatLng(e[0], e[1]))
+              .toList(),
           color: Colors.blue,
+          width: 2,
         );
 
   @override

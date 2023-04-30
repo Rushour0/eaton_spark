@@ -49,7 +49,7 @@ class GoogleMapBloc extends Bloc<GoogleMapEvent, GoogleMapState> {
     changeMap(
       GoogleMapStatus.loading,
     );
-    GoogleMapService.currentLatLng().then((value) {
+    GoogleMapService.currentLatLng().then((value) async {
       GoogleMapService.controller!.animateCamera(
         CameraUpdate.newCameraPosition(
           CameraPosition(
@@ -58,7 +58,7 @@ class GoogleMapBloc extends Bloc<GoogleMapEvent, GoogleMapState> {
           ),
         ),
       );
-      GoogleMapService.stationsNearby();
+      await GoogleMapService.stationsNearby();
     });
   }
 

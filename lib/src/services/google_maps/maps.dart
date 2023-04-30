@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:eaton_spark/src/bloc/map/bloc.dart';
 import 'package:eaton_spark/src/models/map.dart';
 import 'package:flutter/material.dart';
@@ -39,29 +41,33 @@ class GoogleMapService {
   }) async {
     GoogleMapBloc().changeMap(GoogleMapStatus.searching);
 
-    _markers.clear();
-
-    Map<String, dynamic> json = {};
+    Map<String, dynamic> json = {'data': 0};
 
     try {
-      json = await MapsAPIService().makeJsonPost(
+      json['data'] = await MapsAPIService.makeJsonPost(
         route: MapRoutes.directions,
         body: {
           "source": [source.latitude, source.longitude],
-          "destination": [destination.latitude, destination.longitude],
+          "destination": "Mumbai",
           "mode": TravelMode.driving.name,
           "departure_time": departureTime,
-          "waypoints": [], // search keyword
+          "waypoints": [
+            [destination.latitude, destination.longitude]
+          ],
+          // _markers
+          //     .map((e) => [e.position.latitude, e.position.longitude])
+          //     .toList(), // search keyword
+          "optimize_waypoints": true,
         },
       );
     } on Exception catch (e) {
       print('Fetching Directions to selected station failed with error: $e');
     }
 
-    print(json);
+    final MapPolylines mapPolylines =
+        MapPolylines.fromJson(json['data'][0]['overview_polyline']['points']);
 
-    final MapPolylines mapPolylines = MapPolylines.fromJson(json['data']);
-
+    _markers.clear();
     _markers.addAll([
       Marker(
         markerId: MarkerId(source.toString()),
@@ -74,18 +80,22 @@ class GoogleMapService {
         icon: stationIcon!,
       ),
     ]);
+
     _polylines.clear();
-    // print(result.points);
-    // _polylines.add(
-    //   Polyline(
-    //     polylineId: PolylineId(source.toString()),
-    //     points: result.points
-    //         .map((PointLatLng point) => LatLng(point.latitude, point.longitude))
-    //         .toList(),
-    //     color: Colors.blue,
-    //     width: 4,
-    //   ),
-    // );
+    _polylines.add(
+      mapPolylines.polyline,
+    );
+
+    GoogleMapService.currentLatLng().then((value) async {
+      GoogleMapService.controller!.animateCamera(
+        CameraUpdate.newCameraPosition(
+          CameraPosition(
+            target: value,
+            zoom: 15,
+          ),
+        ),
+      );
+    });
 
     GoogleMapBloc().routingMode();
     return;
@@ -131,7 +141,7 @@ class GoogleMapService {
     Map<String, dynamic> json = {};
     final LatLng currentPosition = await currentLatLng();
     try {
-      json = await MapsAPIService().makeJsonPost(
+      json = await MapsAPIService.makeJsonPost(
         route: MapRoutes.places_nearby,
         body: {
           "location": [currentPosition.latitude, currentPosition.longitude],
@@ -150,11 +160,11 @@ class GoogleMapService {
           markerId: MarkerId(mapPlace.vicinity),
           position: mapPlace.geometry.location.latlng,
           icon: stationIcon!,
-          onTap: () async {
-            await getRoute(
-                source: currentPosition,
-                destination: mapPlace.geometry.location.latlng);
-          },
+          // onTap: () async {
+          //   await getRoute(
+          //       source: currentPosition,
+          //       destination: mapPlace.geometry.location.latlng);
+          // },
           infoWindow: InfoWindow(
             title: mapPlace.name,
             snippet: mapPlace.vicinity,
