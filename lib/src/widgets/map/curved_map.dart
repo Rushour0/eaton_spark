@@ -11,7 +11,7 @@ class CurveEdgeMap extends StatelessWidget {
       borderRadius: const BorderRadius.all(Radius.circular(30)),
       clipBehavior: Clip.antiAliasWithSaveLayer,
       child: GoogleMap(
-        zoomControlsEnabled: false,
+        zoomControlsEnabled: true,
         myLocationEnabled: true,
         myLocationButtonEnabled: false,
         buildingsEnabled: true,

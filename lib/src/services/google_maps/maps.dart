@@ -90,7 +90,11 @@ class GoogleMapService {
         ),
       );
     }
-    GoogleMapBloc().changeMap(GoogleMapStatus.loaded);
+    _calculateZoom(
+      main: currentPosition,
+      faraway: placesNearby.results!.last.geometry.location.latlng,
+    );
+
     GoogleMapBloc().addedMarkers();
 
     return placesNearby;
@@ -99,5 +103,17 @@ class GoogleMapService {
   static Future<LatLng> currentLatLng() async {
     final Position position = await _currentLocation();
     return LatLng(position.latitude, position.longitude);
+  }
+
+  static void _calculateZoom({required LatLng main, required LatLng faraway}) {
+    final double zoom = 11;
+    controller!.animateCamera(
+      CameraUpdate.newCameraPosition(
+        CameraPosition(
+          target: main,
+          zoom: zoom,
+        ),
+      ),
+    );
   }
 }

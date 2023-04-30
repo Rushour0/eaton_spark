@@ -94,7 +94,7 @@ class StationsTab extends StatelessWidget {
         floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
         floatingActionButton: BlocBuilder<GoogleMapBloc, GoogleMapState>(
             buildWhen: (previous, current) {
-          if (previous is GoogleMapInitial) {
+          if (previous is GoogleMapInitial) { 
             return true;
           }
 

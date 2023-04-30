@@ -51,7 +51,6 @@ class GoogleMapBloc extends Bloc<GoogleMapEvent, GoogleMapState> {
           ),
         ),
       );
-
       GoogleMapService.stationsNearby();
     });
   }
@@ -60,6 +59,7 @@ class GoogleMapBloc extends Bloc<GoogleMapEvent, GoogleMapState> {
   static LatLng? _position;
 
   void addedMarkers() async {
+    changeMap(GoogleMapStatus.loaded);
     add(GoogleMapMarkersAdded());
   }
 
