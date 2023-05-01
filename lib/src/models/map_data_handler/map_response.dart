@@ -29,21 +29,53 @@ class MapPlacesNearby extends MapResponse {
       };
 }
 
-class MapPolylines extends MapResponse {
-  const MapPolylines({
+class MapDirections extends MapResponse {
+  const MapDirections({
+    required this.start,
+    required this.end,
+    required this.distance,
+    required this.duration,
+    required this.bounds,
     required this.polyline,
   });
 
   final Polyline polyline;
+  final int distance; // in meters
+  final int duration; // in seconds
+  final LatLng start, end;
+  final LatLngBounds bounds;
 
   @override
-  MapPolylines.fromJson(String polylineEncoded)
-      : polyline = Polyline(
-          polylineId: PolylineId(polylineEncoded),
+  MapDirections.fromJson(Map<String, dynamic> directions)
+      : start = LatLng(
+          directions['legs'][0]['start_location']['lat'],
+          directions['legs'][0]['start_location']['lng'],
+        ),
+        end = LatLng(
+          directions['legs'][0]['end_location']['lat'],
+          directions['legs'][0]['end_location']['lng'],
+        ),
+        distance = directions['legs'][0]['distance']['value'],
+        duration = directions['legs'][0]['duration']['value'],
+        bounds = LatLngBounds(
+          southwest: LatLng(
+            directions['bounds']['southwest']['lat'],
+            directions['bounds']['southwest']['lng'],
+          ),
+          northeast: LatLng(
+            directions['bounds']['northeast']['lat'],
+            directions['bounds']['northeast']['lng'],
+          ),
+        ),
+        polyline = Polyline(
+          polylineId: PolylineId(directions['overview_polyline']['points']),
           points: PolylineDo.Polyline.Decode(
-                  encodedString: polylineEncoded, precision: 5)
+                  encodedString: directions['overview_polyline']['points'],
+                  precision: 5)
               .decodedCoords
-              .map((e) => LatLng(e[0], e[1]))
+              .map(
+                (e) => LatLng(e[0], e[1]),
+              )
               .toList(),
           color: Colors.blue,
           width: 2,

@@ -1,3 +1,4 @@
+import 'package:eaton_spark/src/bloc/services_tab/bloc.dart';
 import 'package:eaton_spark/src/models/map.dart';
 import 'package:eaton_spark/src/services/google_maps/maps.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,21 +23,29 @@ class GoogleMapBloc extends Bloc<GoogleMapEvent, GoogleMapState> {
       emit(
         GoogleMapInitial(),
       );
+      return;
     } else if (event is GoogleMapSearchStarted) {
       emit(
         GoogleMapSearching(),
       );
+      return;
     } else if (event is GoogleMapMarkersAdded) {
       emit(
         GoogleMapMarkersChanged(
           markers: GoogleMapService.markers,
         ),
       );
+      return;
     } else if (event is GoogleMapRouteMode) {
       emit(
         GoogleMapRouteActive(
           polylines: GoogleMapService.polylines,
         ),
+      );
+      return;
+    } else if (event is GoogleMapRouteModeExit) {
+      emit(
+        GoogleMapRouteModeInactive(),
       );
     }
 
@@ -58,7 +67,6 @@ class GoogleMapBloc extends Bloc<GoogleMapEvent, GoogleMapState> {
           ),
         ),
       );
-      await GoogleMapService.stationsNearby();
     });
   }
 
@@ -70,8 +78,14 @@ class GoogleMapBloc extends Bloc<GoogleMapEvent, GoogleMapState> {
     add(GoogleMapMarkersAdded());
   }
 
-  void routingMode() {
+  void activateRoutingMode() {
     add(GoogleMapRouteMode());
+  }
+
+  void deactivateRoutingMode() {
+    GoogleMapService.clearRoutes();
+    add(GoogleMapRouteModeExit());
+    GoogleMapService.mode(ServicesTabBloc.mode);
   }
 
   void changeMap(GoogleMapStatus status) {
@@ -82,7 +96,8 @@ class GoogleMapBloc extends Bloc<GoogleMapEvent, GoogleMapState> {
       add(GoogleMapSearchStarted());
     } else if (status == GoogleMapStatus.loading) {
       add(GoogleMapInitializing());
+    } else {
+      add(GoogleMapChanged());
     }
-    add(GoogleMapChanged());
   }
 }

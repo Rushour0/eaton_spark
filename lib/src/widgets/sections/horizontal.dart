@@ -34,7 +34,6 @@ class HorizontalSection extends StatelessWidget {
             ),
             scrollable
                 ? SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
                     scrollDirection: Axis.horizontal,
                     child: Row(
                       children: children

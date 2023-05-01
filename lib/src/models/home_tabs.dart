@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-enum HomeTabMode { dashboard, stations, activity, profile }
+enum HomeTabMode { dashboard, services, activity, profile }
 
 class HomeTabModel extends Equatable {
   const HomeTabModel({required this.mode});

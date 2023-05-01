@@ -6,43 +6,48 @@ class FloatingButtonDashboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SpeedDial(icon: Icons.menu, activeIcon: Icons.close, children: [
-      SpeedDialChild(
-        child: const ImageIcon(
-          AssetImage(
-            'assets/images/battery.png',
-          ),
+    return SpeedDial(
+      icon: Icons.menu,
+      activeIcon: Icons.close,
+      children: [
+        SpeedDialChild(
+          child: Icon(Icons.wifi),
+          label: 'Add via WiFi',
+          onTap: () {},
         ),
-        label: 'Battery Swap',
-        onTap: () {},
-      ),
-      SpeedDialChild(
-        child: const ImageIcon(
-          AssetImage(
-            'assets/images/car.png',
-          ),
+        SpeedDialChild(
+          child: Icon(Icons.two_wheeler),
+          label: 'Add 2 Wheeler',
+          onTap: () {},
         ),
-        label: 'Add EV',
-        onTap: () {},
-      ),
-      SpeedDialChild(
-        child: const ImageIcon(
-          AssetImage(
-            'assets/images/route.png',
+        SpeedDialChild(
+          child: const ImageIcon(
+            AssetImage(
+              'assets/images/car.png',
+            ),
           ),
+          label: 'Add 4 Wheeler',
+          onTap: () {},
         ),
-        label: 'Explore Route',
-        onTap: () {},
-      ),
-      SpeedDialChild(
-        child: const ImageIcon(
-          AssetImage(
-            'assets/images/charging-station.png',
-          ),
-        ),
-        label: 'EV Charge',
-        onTap: () {},
-      )
-    ]);
+        // SpeedDialChild(
+        //   child: const ImageIcon(
+        //     AssetImage(
+        //       'assets/images/route.png',
+        //     ),
+        //   ),
+        //   label: 'Explore Route',
+        //   onTap: () {},
+        // ),
+        // SpeedDialChild(
+        //   child: const ImageIcon(
+        //     AssetImage(
+        //       'assets/images/charging-station.png',
+        //     ),
+        //   ),
+        //   label: 'EV Charge',
+        //   onTap: () {},
+        // )
+      ],
+    );
   }
 }

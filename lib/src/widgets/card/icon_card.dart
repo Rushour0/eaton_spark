@@ -6,15 +6,17 @@ class IconCard extends StatelessWidget {
     super.key,
     required this.icon,
     required this.text,
-    this.iconSize = 28,
+    this.iconSize = 24,
     this.onTap,
     this.size = 80,
+    this.isSelected = false,
   });
-  final IconData icon;
+  final Widget icon;
   final String text;
   final VoidCallback? onTap;
   final double size;
   final double iconSize;
+  final bool isSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -32,10 +34,17 @@ class IconCard extends StatelessWidget {
               ),
             ],
             gradient: LinearGradient(
-              colors: [
-                Theme.of(context).colorScheme.primary.withOpacity(0.8),
-                Theme.of(context).colorScheme.primary,
-              ],
+              colors: isSelected
+                  ? [
+                      GlobalColor.success.withOpacity(0.5),
+                      GlobalColor.success.withOpacity(0.8),
+                      GlobalColor.success,
+                    ]
+                  : [
+                      Theme.of(context).colorScheme.primary.withOpacity(0.5),
+                      Theme.of(context).colorScheme.primary.withOpacity(0.8),
+                      Theme.of(context).colorScheme.primary,
+                    ],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
@@ -46,16 +55,19 @@ class IconCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Icon(
-                icon,
-                size: iconSize,
-                color: Colors.white,
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SizedBox(
+                  height: iconSize,
+                  width: iconSize,
+                  child: icon,
+                ),
               ),
               Text(
                 text,
                 style: const TextStyle(
                   color: Colors.white,
-                  fontSize: 12,
+                  fontSize: 10,
                 ),
               ),
             ],

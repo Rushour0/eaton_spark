@@ -1,10 +1,12 @@
 import 'package:eaton_spark/src/bloc/home/bloc.dart';
+import 'package:eaton_spark/src/bloc/services_tab/bloc.dart';
 import 'package:eaton_spark/src/globals/colors.dart';
+import 'package:eaton_spark/src/models/service_tab.dart';
 import 'package:eaton_spark/src/screens/home/tabs/mobile/activity.dart';
 
 import 'package:eaton_spark/src/screens/home/tabs/mobile/dashboard.dart';
 import 'package:eaton_spark/src/screens/home/tabs/mobile/profile.dart';
-import 'package:eaton_spark/src/screens/home/tabs/mobile/stations.dart';
+import 'package:eaton_spark/src/screens/home/tabs/mobile/services.dart';
 import 'package:eaton_spark/src/widgets/appbar/appbar.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
@@ -26,14 +28,15 @@ class MainMobile extends StatelessWidget {
         },
         builder: (context, state) {
           return Scaffold(
-            appBar: CustomAppbar(title: ''),
+            
             extendBodyBehindAppBar: false,
+            backgroundColor: GlobalColor.background,
             extendBody: false,
             body: IndexedStack(
               index: state.mode.index,
               children: const [
                 Dashboard(),
-                StationsTab(),
+                ServicesTab(),
                 ActivityTab(),
                 ProfileTab(),
               ],

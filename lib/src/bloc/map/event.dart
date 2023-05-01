@@ -14,3 +14,5 @@ class GoogleMapMarkersAdded extends GoogleMapEvent {}
 class GoogleMapSearchStarted extends GoogleMapEvent {}
 
 class GoogleMapRouteMode extends GoogleMapEvent {}
+
+class GoogleMapRouteModeExit extends GoogleMapEvent {}

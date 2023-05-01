@@ -59,6 +59,10 @@ class GoogleMapRouteActive extends GoogleMapState {
   List<Object?> get props => [polylines];
 }
 
+class GoogleMapRouteModeInactive extends GoogleMapState {
+  const GoogleMapRouteModeInactive() : super();
+} 
+
 class GoogleMapError extends GoogleMapState {
   const GoogleMapError() : super();
 }

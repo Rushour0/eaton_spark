@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:eaton_spark/src/bloc/map/bloc.dart';
 import 'package:eaton_spark/src/models/map.dart';
+import 'package:eaton_spark/src/models/service_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -30,11 +31,106 @@ class GoogleMapService {
 
   static Set<Polyline> get polylines => _polylines;
 
-  static BitmapDescriptor? stationIcon;
+  static BitmapDescriptor? stationIcon, batteryIcon;
 
-  static Future<void> getRoute({
+  static mode(
+    ServicesTabMode mode, {
+    dynamic source,
+    dynamic destination,
+    dynamic batteryLocation,
+    dynamic batteryDate,
+    dynamic batteryTime,
+    dynamic planLocation,
+    dynamic planDate,
+    dynamic planTime,
+  }) {
+    switch (mode) {
+      case ServicesTabMode.charge_now:
+        _markers.clear();
+        _polylines.clear();
+        _stationsNearby();
+        break;
+      case ServicesTabMode.explore_route:
+        _markers.clear();
+        _polylines.clear();
+        _getRoute(source: source, destination: destination, midpoint: true);
+        break;
+      case ServicesTabMode.battery_swap:
+        _markers.clear();
+        _polylines.clear();
+        _batteryViaLocation(
+          location: batteryLocation,
+        );
+        break;
+      case ServicesTabMode.plan_charge:
+        _markers.clear();
+        _polylines.clear();
+        break;
+      case ServicesTabMode.map:
+        break;
+    }
+  }
+
+  static void clearRoutes() {
+    _polylines.clear();
+  }
+
+  static Future<void> _batteryViaLocation({
+    dynamic location,
+    dynamic time,
+    dynamic date,
+  }) async {
+    _markers.clear();
+
+    GoogleMapBloc().changeMap(GoogleMapStatus.searching);
+    Map<String, dynamic> json = {};
+    final LatLng currentPosition = await currentLatLng();
+    try {
+      json = await MapsAPIService.makeJsonPost(
+        route: MapRoutes.places_nearby,
+        body: {
+          "location": currentPosition,
+          "radius": 10000, // in meters
+          "keyword": "EV Battery", // search keyword
+        },
+      );
+    } on Exception catch (e) {
+      print('Fetching Nearby Stations failed with error: $e');
+    }
+    final MapPlacesNearby placesNearby = MapPlacesNearby.fromJson(json);
+
+    for (MapStation mapPlace in placesNearby.results!) {
+      _markers.add(
+        Marker(
+          markerId: MarkerId(mapPlace.vicinity),
+          position: mapPlace.geometry.location.latlng,
+          icon: batteryIcon!,
+          onTap: () async {
+            await _getRoute(
+                source: currentPosition,
+                destination: mapPlace.geometry.location.latlng);
+          },
+          infoWindow: InfoWindow(
+            title: mapPlace.name,
+            snippet: mapPlace.vicinity,
+          ),
+        ),
+      );
+    }
+    _calculateZoom(
+      main: placesNearby.results!.first.geometry.location.latlng,
+      faraway: placesNearby.results!.last.geometry.location.latlng,
+    );
+
+    GoogleMapBloc().addedMarkers();
+
+    return;
+  }
+
+  static Future<void> _getRoute({
     required dynamic source,
     required dynamic destination,
+    bool midpoint = false,
     TravelMode mode = TravelMode.driving,
     List<String> waypoints = const ["via:Nearest EV Stations"],
     String departureTime = 'now',
@@ -55,12 +151,9 @@ class GoogleMapService {
           "destination": destination.runtimeType == String
               ? destination
               : [destination.latitude, destination.longitude],
-          "mode": TravelMode.driving.name,
+          "mode": mode.name,
           "departure_time": departureTime,
           "waypoints": [],
-          // _markers
-          //     .map((e) => [e.position.latitude, e.position.longitude])
-          //     .toList(), // search keyword
           "optimize_waypoints": true,
         },
       );
@@ -68,41 +161,46 @@ class GoogleMapService {
       print('Fetching Directions to selected station failed with error: $e');
     }
 
-    final MapPolylines mapPolylines =
-        MapPolylines.fromJson(json['data'][0]['overview_polyline']['points']);
+    final MapDirections mapDirections = MapDirections.fromJson(json['data'][0]);
 
     _polylines.clear();
     _polylines.add(
-      mapPolylines.polyline,
+      mapDirections.polyline,
     );
-
-    GoogleMapService.currentLatLng().then((value) async {
-      GoogleMapService.controller!.animateCamera(
-        CameraUpdate.newCameraPosition(
-          CameraPosition(
-            target: value,
-            zoom: 15,
-          ),
-        ),
-      );
-
-      _markers.clear();
-      _markers.addAll([
+    _markers.clear();
+    // Temporary - Add mid point marker
+    if (midpoint) {
+      int mid = (mapDirections.polyline.points.length / 2).ceil();
+      LatLng midPoint = mapDirections.polyline.points[mid];
+      _markers.add(
         Marker(
-          markerId: MarkerId(source.toString()),
-          position: source,
+          markerId: MarkerId('midpoint'),
+          position: midPoint,
           icon: BitmapDescriptor.defaultMarker,
         ),
-        Marker(
-          markerId: MarkerId(destination.toString()),
-          position: destination,
-          icon: stationIcon!,
-        ),
-      ]);
-    });
+      );
+    }
+    _markers.addAll([
+      Marker(
+        markerId: MarkerId(source.toString()),
+        position: mapDirections.start,
+        icon: BitmapDescriptor.defaultMarker,
+      ),
+      Marker(
+        markerId: MarkerId(destination.toString()),
+        position: mapDirections.end,
+        icon: BitmapDescriptor.defaultMarker,
+      ),
 
-    GoogleMapBloc().routingMode();
-    return;
+      // Temporary - Add mid point marker
+    ]);
+    GoogleMapService.controller!.animateCamera(
+      CameraUpdate.newLatLngBounds(
+        mapDirections.bounds,
+        50,
+      ),
+    );
+    GoogleMapBloc().activateRoutingMode();
   }
 
   static Future<Position> _currentLocation() async {
@@ -112,6 +210,14 @@ class GoogleMapService {
         devicePixelRatio: 0.1,
       ),
       'assets/images/small-icon-station.png',
+      mipmaps: false,
+    );
+    batteryIcon ??= await BitmapDescriptor.fromAssetImage(
+      ImageConfiguration(
+        size: Size(4, 4),
+        devicePixelRatio: 0.1,
+      ),
+      'assets/images/small-icon-battery.png',
       mipmaps: false,
     );
     bool serviceEnabled;
@@ -139,7 +245,7 @@ class GoogleMapService {
     return await _geolocatorAndroid.getCurrentPosition();
   }
 
-  static Future<MapPlacesNearby> stationsNearby() async {
+  static Future<MapPlacesNearby> _stationsNearby() async {
     GoogleMapBloc().changeMap(GoogleMapStatus.searching);
     _markers.clear();
     Map<String, dynamic> json = {};
@@ -164,11 +270,11 @@ class GoogleMapService {
           markerId: MarkerId(mapPlace.vicinity),
           position: mapPlace.geometry.location.latlng,
           icon: stationIcon!,
-          // onTap: () async {
-          //   await getRoute(
-          //       source: currentPosition,
-          //       destination: mapPlace.geometry.location.latlng);
-          // },
+          onTap: () async {
+            await _getRoute(
+                source: currentPosition,
+                destination: mapPlace.geometry.location.latlng);
+          },
           infoWindow: InfoWindow(
             title: mapPlace.name,
             snippet: mapPlace.vicinity,

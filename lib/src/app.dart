@@ -27,6 +27,7 @@ class App extends StatelessWidget {
           GlobalColor.theme(snapshot.data!.theme);
           return MaterialApp(
               theme: ThemeData(
+                useMaterial3: true,
                 colorScheme: ColorScheme.fromSeed(
                   seedColor: GlobalColor.primary,
                   brightness: Brightness.light,
@@ -34,6 +35,7 @@ class App extends StatelessWidget {
                 fontFamily: 'Avenir',
               ),
               darkTheme: ThemeData(
+                useMaterial3: true,
                 colorScheme: ColorScheme.fromSeed(
                   seedColor: GlobalColor.primary,
                   brightness: Brightness.dark,

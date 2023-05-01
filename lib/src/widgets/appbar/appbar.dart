@@ -12,7 +12,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
         super(key: key);
 
   final TextEditingController textController = TextEditingController();
-  final String title;
+  final Widget title;
   @override
   final Size preferredSize; // default is 56.0
 
@@ -22,36 +22,16 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
     return BlocProvider(
       create: (_) => ThemeBloc(),
       child: BlocBuilder<ThemeBloc, ThemeState>(builder: (context, state) {
-        return AppBar(
-            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-            elevation: 0,
-            title: Text(
-              title,
-              style: TextStyle(
-                color: GlobalColor.text,
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            centerTitle: true,
-            actions: [
-              IconButton(
-                icon: BlocProvider.of<ThemeBloc>(context).isDark
-                    ? Icon(Icons.dark_mode)
-                    : Icon(Icons.light_mode, color: Colors.black),
-                onPressed: () {
-                  ThemeBloc().changeTheme(!ThemeBloc().isDark);
-                },
-              ),
-              // SearchBar(
-              //     textController: textController,
-              //     onChanged: (str) {},
-              //     onSubmitted: (str) {},
-              //     onToggle: () {
-              //       BlocProvider.of<CustomAppbarBloc>(context)
-              //           .changeCustomAppbar(!state.isSearch);
-              //     })
-            ]);
+        return AppBar(elevation: 0, title: title, centerTitle: true, actions: [
+          IconButton(
+            icon: BlocProvider.of<ThemeBloc>(context).isDark
+                ? Icon(Icons.dark_mode)
+                : Icon(Icons.light_mode, color: Colors.black),
+            onPressed: () {
+              ThemeBloc().changeTheme(!ThemeBloc().isDark);
+            },
+          ),
+        ]);
       }),
     );
   }
