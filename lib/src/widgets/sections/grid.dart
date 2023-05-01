@@ -7,11 +7,12 @@ class GridSection extends StatelessWidget {
     this.height = 100,
     this.spacing = 8,
     this.title = 'Grid Section',
+    this.crossAxisCount = 2,
   }) : super(key: key);
   final double height;
   final double spacing;
   final String title;
-  final int crossAxisCount = 2;
+  final int crossAxisCount;
   final List<Widget> children;
 
   @override

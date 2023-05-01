@@ -7,6 +7,7 @@ import 'package:eaton_spark/src/models/service_tab.dart';
 
 import 'package:eaton_spark/src/services/google_maps/maps.dart';
 import 'package:eaton_spark/src/widgets/appbar/appbar.dart';
+import 'package:eaton_spark/src/widgets/bottomsheet/service_bottomsheet.dart';
 import 'package:eaton_spark/src/widgets/interaction_fields/choose_service.dart';
 
 import 'package:eaton_spark/src/widgets/map/curved_map.dart';
@@ -32,7 +33,6 @@ class ServicesTab extends StatelessWidget {
         ),
       ],
       child: Scaffold(
-        resizeToAvoidBottomInset: true,
         floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
         floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
         floatingActionButton: BlocBuilder<GoogleMapBloc, GoogleMapState>(
@@ -120,7 +120,7 @@ class ServicesTab extends StatelessWidget {
                     children: [
                       CustomAppbar(
                         title: Padding(
-                          padding: EdgeInsets.fromLTRB(16, 0, 16, 8),
+                          padding: EdgeInsets.fromLTRB(0, 0, 16, 8),
                           child: Align(
                             alignment: Alignment.centerLeft,
                             child: Text.rich(

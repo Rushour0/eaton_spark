@@ -22,7 +22,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
     return BlocProvider(
       create: (_) => ThemeBloc(),
       child: BlocBuilder<ThemeBloc, ThemeState>(builder: (context, state) {
-        return AppBar(elevation: 0, title: title, centerTitle: true, actions: [
+        return AppBar(elevation: 0, title: title, centerTitle: false, actions: [
           IconButton(
             icon: BlocProvider.of<ThemeBloc>(context).isDark
                 ? Icon(Icons.dark_mode)

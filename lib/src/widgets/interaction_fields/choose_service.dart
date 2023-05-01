@@ -3,6 +3,7 @@ import 'package:eaton_spark/src/bloc/theme/bloc.dart';
 import 'package:eaton_spark/src/globals/colors.dart';
 import 'package:eaton_spark/src/models/service_tab.dart';
 import 'package:eaton_spark/src/services/google_maps/maps.dart';
+import 'package:eaton_spark/src/widgets/bottomsheet/service_bottomsheet.dart';
 import 'package:eaton_spark/src/widgets/card/icon_card.dart';
 import 'package:eaton_spark/src/widgets/textfield/map_query_field.dart';
 import 'package:eaton_spark/src/widgets/textfield/textfield.dart';
@@ -41,13 +42,20 @@ class ChooseService extends StatelessWidget {
                 children: _options.entries
                     .map(
                       (e) => IconCard(
-                        size: 70,
-                        icon: e.value,
-                        text: e.key.title,
-                        isSelected: e.key == state.mode,
-                        onTap: () => BlocProvider.of<ServicesTabBloc>(context)
-                            .changeMode(e.key),
-                      ),
+                          size: 70,
+                          icon: e.value,
+                          text: e.key.title,
+                          isSelected: e.key == state.mode,
+                          onTap: () async {
+                            BlocProvider.of<ServicesTabBloc>(context)
+                                .changeMode(e.key);
+                            await showModalBottomSheet(
+                                isScrollControlled: true,
+                                backgroundColor: Colors.transparent,
+                                enableDrag: true,
+                                context: context,
+                                builder: (context) => ServicesTabBottomSheet());
+                          }),
                     )
                     .toList(),
               ),

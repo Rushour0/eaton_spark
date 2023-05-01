@@ -44,7 +44,7 @@ class Dashboard extends StatelessWidget {
                   if (state.isLoggedIn) {
                     return CustomAppbar(
                       title: Padding(
-                        padding: EdgeInsets.fromLTRB(16, 0, 16, 8),
+                        padding: EdgeInsets.fromLTRB(0, 0, 16, 8),
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
