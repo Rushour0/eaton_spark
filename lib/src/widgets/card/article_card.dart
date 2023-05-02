@@ -40,9 +40,13 @@ class ArticleCard extends StatelessWidget {
               style: Theme.of(context).textTheme.titleSmall,
             ),
           ),
-          Text(
-            subtitle,
-            style: Theme.of(context).textTheme.bodySmall,
+          SizedBox(
+            width: imageWidth,
+            child: Text(
+              subtitle,
+              textAlign: TextAlign.justify,
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
           ),
         ],
       ),

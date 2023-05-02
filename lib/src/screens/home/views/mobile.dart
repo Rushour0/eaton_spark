@@ -1,5 +1,8 @@
+import 'package:eaton_spark/src/bloc/authentication/bloc.dart';
 import 'package:eaton_spark/src/bloc/home/bloc.dart';
+import 'package:eaton_spark/src/bloc/map/bloc.dart';
 import 'package:eaton_spark/src/bloc/services_tab/bloc.dart';
+import 'package:eaton_spark/src/bloc/theme/bloc.dart';
 import 'package:eaton_spark/src/globals/colors.dart';
 import 'package:eaton_spark/src/models/service_tab.dart';
 import 'package:eaton_spark/src/screens/home/tabs/mobile/activity.dart';
@@ -20,15 +23,30 @@ class MainMobile extends StatelessWidget {
   Widget build(BuildContext context) {
     final double screenHeight = MediaQuery.of(context).size.height;
     final double screenWidth = MediaQuery.of(context).size.width;
-    return BlocProvider(
-      create: (_) => HomeTabBloc(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<HomeTabBloc>.value(
+          value: HomeTabBloc(),
+        ),
+        BlocProvider<ServicesTabBloc>.value(
+          value: ServicesTabBloc(),
+        ),
+        BlocProvider<GoogleMapBloc>.value(
+          value: GoogleMapBloc(),
+        ),
+        BlocProvider<AuthenticationBloc>.value(
+          value: AuthenticationBloc(),
+        ),
+        BlocProvider<ThemeBloc>.value(
+          value: ThemeBloc(),
+        ),
+      ],
       child: BlocBuilder<HomeTabBloc, HomeTabState>(
         buildWhen: (previous, current) {
           return previous.mode != current.mode;
         },
         builder: (context, state) {
           return Scaffold(
-            
             extendBodyBehindAppBar: false,
             backgroundColor: GlobalColor.background,
             extendBody: false,

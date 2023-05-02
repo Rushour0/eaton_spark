@@ -19,6 +19,10 @@ class ActivityTab extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16.0, 8, 0, 0),
+            child: Text('Model Y Tesla'),
+          ),
           ListTile(
             leading: Icon(Icons.charging_station),
             title: Text('Scheduled Charge'),
@@ -34,10 +38,15 @@ class ActivityTab extends StatelessWidget {
         ],
       ),
     ),
+    Divider(),
     Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16.0, 8, 0, 0),
+            child: Text('Model X Tesla'),
+          ),
           ListTile(
             leading: Icon(Icons.swap_horiz_sharp),
             title: Text('Battery Swap'),
@@ -61,6 +70,10 @@ class ActivityTab extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16.0, 8, 0, 0),
+            child: Text('Model 3 Tesla'),
+          ),
           ListTile(
             leading: Icon(Icons.charging_station),
             title: Text('Charged'),
@@ -76,10 +89,15 @@ class ActivityTab extends StatelessWidget {
         ],
       ),
     ),
+    Divider(),
     Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16.0, 8, 0, 0),
+            child: Text('Model S Tesla'),
+          ),
           ListTile(
             leading: Icon(Icons.swap_horiz_sharp),
             title: Text('Battery Swap'),
@@ -95,111 +113,21 @@ class ActivityTab extends StatelessWidget {
         ],
       ),
     ),
+    Divider(),
     Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16.0, 8, 0, 0),
+            child: Text('Model X Tesla'),
+          ),
           ListTile(
             leading: Icon(Icons.charging_station),
             title: Text('Charged'),
             subtitle: Text('23 hours ago'),
             trailing: Text(
               '₹ 140',
-              style: TextStyle(
-                color: Colors.green,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-        ],
-      ),
-    ),
-    Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          ListTile(
-            leading: Icon(Icons.swap_horiz_sharp),
-            title: Text('Battery Swap'),
-            subtitle: Text('23 hours ago'),
-            trailing: Text(
-              '₹ 100',
-              style: TextStyle(
-                color: Colors.green,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-        ],
-      ),
-    ),
-    Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          ListTile(
-            leading: Icon(Icons.charging_station),
-            title: Text('Charged'),
-            subtitle: Text('23 hours ago'),
-            trailing: Text(
-              '₹ 140',
-              style: TextStyle(
-                color: Colors.green,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-        ],
-      ),
-    ),
-    Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          ListTile(
-            leading: Icon(Icons.swap_horiz_sharp),
-            title: Text('Battery Swap'),
-            subtitle: Text('23 hours ago'),
-            trailing: Text(
-              '₹ 100',
-              style: TextStyle(
-                color: Colors.green,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-        ],
-      ),
-    ),
-    Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          ListTile(
-            leading: Icon(Icons.charging_station),
-            title: Text('Charged'),
-            subtitle: Text('23 hours ago'),
-            trailing: Text(
-              '₹ 140',
-              style: TextStyle(
-                color: Colors.green,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-        ],
-      ),
-    ),
-    Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          ListTile(
-            leading: Icon(Icons.swap_horiz_sharp),
-            title: Text('Battery Swap'),
-            subtitle: Text('23 hours ago'),
-            trailing: Text(
-              '₹ 100',
               style: TextStyle(
                 color: Colors.green,
                 fontWeight: FontWeight.bold,
@@ -245,10 +173,9 @@ class ActivityTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider.value(
-      value: BlocProvider.of<HomeTabBloc>(context),
+      value: context.read<HomeTabBloc>(),
       child: BlocBuilder<HomeTabBloc, HomeTabState>(
           buildWhen: (previous, current) {
-        print(current);
         if (current is FirstLoadOfTab && current.mode == HomeTabMode.activity) {
           builder();
           return true;

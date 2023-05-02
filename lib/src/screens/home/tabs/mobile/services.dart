@@ -27,10 +27,10 @@ class ServicesTab extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<GoogleMapBloc>.value(
-          value: GoogleMapBloc(),
+          value: context.read<GoogleMapBloc>(),
         ),
         BlocProvider<ServicesTabBloc>.value(
-          value: ServicesTabBloc(),
+          value: context.read<ServicesTabBloc>(),
         ),
       ],
       child: Scaffold(

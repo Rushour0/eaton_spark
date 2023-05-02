@@ -22,10 +22,10 @@ class ProfileTab extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<AuthenticationBloc>.value(
-          value: AuthenticationBloc(),
+          value: context.read<AuthenticationBloc>(),
         ),
         BlocProvider<ThemeBloc>.value(
-          value: ThemeBloc(),
+          value: context.read<ThemeBloc>(),
         ),
       ],
       child: Scaffold(

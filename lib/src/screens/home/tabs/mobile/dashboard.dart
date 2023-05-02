@@ -32,6 +32,55 @@ class Dashboard extends StatelessWidget {
     ServicesTabMode.plan_charge: Icon(Icons.calendar_month),
   };
 
+  static final _about = [
+    {
+      "name": "Eaton Corporation",
+      "info":
+          "Making of Eaton Corporation, a power management company, dedicated to improving the quality of life and the environment through the use of power management technologies and services. Eaton has approximately 95,000 employees and sells products to customers in more than 175 countries.",
+      "image": "assets/images/eaton-logo.jpg",
+    },
+    {
+      "name": "Eaton X Bae Systems",
+      "info":
+          "Eaton and BAE Systems, two global leaders in the field of power management and vehicle technology, have collaborated to develop electric trucks. The collaboration aims to create a more sustainable transportation system and reduce greenhouse gas emissions.",
+      "image": "assets/images/eaton-bae-truck.jpg",
+    },
+    {
+      "name": "Eaton X Charge",
+      "info":
+          "Eaton and Charge have teamed up to create electric vehicle (EV) charging infrastructure that's faster and easier to deploy. The partnership combines Charge's expertise in EV charging with Eaton's power management solutions, creating an all-in-one system that's modular, scalable, and can be easily deployed in a wide range of locations.",
+      "image": "assets/images/eaton-charge-report.jpg",
+    },
+  ];
+
+  static final _stations = [
+    {
+      "name": "Prakriti EV Charging Station",
+      "address": "Kalyani Nagar, Pune, Maharashtra",
+      "image": "assets/images/station1.jpg"
+    },
+    {
+      "name": "Samarthya EV Charging Station",
+      "address": "Baner, Pune, Maharashtra",
+      "image": "assets/images/station2.jpg"
+    },
+    {
+      "name": "Urjavikas EV Charging Station",
+      "address": "Viman Nagar, Pune, Maharashtra",
+      "image": "assets/images/station3.jpg"
+    },
+    {
+      "name": "Vidyut EV Charging Station",
+      "address": "Kothrud, Pune, Maharashtra",
+      "image": "assets/images/station4.jpg"
+    },
+    {
+      "name": "Tatva EV Charging Station",
+      "address": "Kharadi, Pune, Maharashtra",
+      "image": "assets/images/station5.jpg"
+    }
+  ];
+
   @override
   Widget build(BuildContext context) {
     final double screenHeight = MediaQuery.of(context).size.height;
@@ -126,7 +175,7 @@ class Dashboard extends StatelessWidget {
                             icon: e.value,
                             text: e.key.title,
                             onTap: () {
-                              ServicesTabBloc().changeMode(e.key);
+                              context.read<ServicesTabBloc>().changeMode(e.key);
                               HomeTabBloc().changeHomeTab(1);
                             },
                           ),
@@ -140,16 +189,12 @@ class Dashboard extends StatelessWidget {
               height: 175,
               verticalPadding: 24,
               rightPadding: 24,
-              children: [
-                'assets/images/stations.jpeg',
-                'assets/images/ambient-car-charge.jpeg',
-                'assets/images/car-charge.jpeg',
-              ]
+              children: _stations
                   .map(
-                    (image) => ArticleCard(
-                      title: 'EV Charge Station',
-                      subtitle: 'Stations',
-                      image: image,
+                    (station) => ArticleCard(
+                      title: station['name']!,
+                      subtitle: station['address']!,
+                      image: station['image']!,
                       onTap: () {},
                     ),
                   )
@@ -162,16 +207,12 @@ class Dashboard extends StatelessWidget {
               height: 175,
               verticalPadding: 24,
               rightPadding: 24,
-              children: [
-                'assets/images/car-charge.jpeg',
-                'assets/images/ambient-car-charge.jpeg',
-                'assets/images/stations.jpeg',
-              ]
+              children: _about
                   .map(
-                    (image) => ArticleCard(
-                      title: 'EV Charge Station',
-                      subtitle: 'Stations',
-                      image: image,
+                    (data) => ArticleCard(
+                      title: data['name']!,
+                      subtitle: data['info']!,
+                      image: data['image']!,
                       onTap: () {},
                     ),
                   )

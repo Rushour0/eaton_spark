@@ -19,13 +19,13 @@ class HomeTabBloc extends Bloc<HomeTabEvent, HomeTabState> {
     print('HomeTabChanged: $_mode');
     if (!_firstLoads[_mode]!) {
       _firstLoads[_mode] = true;
-      print('First load of tab: $_mode');
-      emit(FirstLoadOfTab(mode: _mode));
+      emit(FirstLoadOfTab(mode: _mode, loaded: true));
       return;
     }
     emit(
       state.copyWith(
         mode: _mode,
+        loaded: true,
       ),
     );
   }

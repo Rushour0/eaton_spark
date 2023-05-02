@@ -36,6 +36,7 @@ class ServicesTabBloc extends Bloc<ServicesTabEvent, ServicesTabState> {
 
   void changeMode(ServicesTabMode mode) {
     _mode = mode;
+
     GoogleMapService.mode(mode);
     add(ServicesTabStateChanged());
   }

@@ -36,6 +36,7 @@ class HorizontalSection extends StatelessWidget {
                 ? SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: children
                           .map(
                             (e) => Padding(

@@ -19,37 +19,85 @@ class StationInfoCard extends StatelessWidget {
           subtitle: Text(address),
           // isThreeLine: true,
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Row(
-              children: [
-                Icon(
-                  Icons.location_on,
-                  color: GlobalColor.secondary,
-                ),
-                Text(' 3km away', style: TextStyle(fontSize: 12)),
-              ],
-            ),
-            Row(
-              children: [
-                Icon(
-                  Icons.electric_car_rounded,
-                  color: GlobalColor.primary,
-                ),
-                Text(' 7 kWh AC', style: TextStyle(fontSize: 12)),
-              ],
-            ),
-            Row(
-              children: [
-                Icon(
-                  Icons.timelapse_rounded,
-                  color: GlobalColor.tertiary,
-                ),
-                Text(' Free in 20mins', style: TextStyle(fontSize: 12)),
-              ],
-            ),
-          ],
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.location_on,
+                        color: GlobalColor.secondary,
+                      ),
+                      Text(' 3km away', style: TextStyle(fontSize: 12)),
+                    ],
+                  ),
+                  SizedBox(height: 15),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.electric_car_rounded,
+                        color: GlobalColor.primary,
+                      ),
+                      Text(' 240V AC', style: TextStyle(fontSize: 12)),
+                    ],
+                  ),
+                ],
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.timelapse_rounded,
+                        color: GlobalColor.tertiary,
+                      ),
+                      Text(' Free in 20mins', style: TextStyle(fontSize: 12)),
+                    ],
+                  ),
+                  SizedBox(height: 15),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.charging_station_rounded,
+                        color: GlobalColor.danger,
+                      ),
+                      Text(' Type 2', style: TextStyle(fontSize: 12)),
+                    ],
+                  ),
+                ],
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.currency_rupee_rounded,
+                        color: GlobalColor.primary,
+                      ),
+                      Text(' 8 ₹ / kWh', style: TextStyle(fontSize: 12)),
+                    ],
+                  ),
+                  SizedBox(height: 15),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.webhook_rounded,
+                        color: GlobalColor.notice,
+                      ),
+                      Text(' Tata Power ', style: TextStyle(fontSize: 12)),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
         const Divider(
           thickness: 2,
