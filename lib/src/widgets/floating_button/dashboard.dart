@@ -29,24 +29,6 @@ class FloatingButtonDashboard extends StatelessWidget {
           label: 'Add 4 Wheeler',
           onTap: () {},
         ),
-        // SpeedDialChild(
-        //   child: const ImageIcon(
-        //     AssetImage(
-        //       'assets/images/route.png',
-        //     ),
-        //   ),
-        //   label: 'Explore Route',
-        //   onTap: () {},
-        // ),
-        // SpeedDialChild(
-        //   child: const ImageIcon(
-        //     AssetImage(
-        //       'assets/images/charging-station.png',
-        //     ),
-        //   ),
-        //   label: 'EV Charge',
-        //   onTap: () {},
-        // )
       ],
     );
   }

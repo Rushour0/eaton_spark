@@ -16,12 +16,26 @@ class HomeTabBloc extends Bloc<HomeTabEvent, HomeTabState> {
   }
 
   _onHomeTabChanged(HomeTabChanged event, Emitter<HomeTabState> emit) async {
+    print('HomeTabChanged: $_mode');
+    if (!_firstLoads[_mode]!) {
+      _firstLoads[_mode] = true;
+      print('First load of tab: $_mode');
+      emit(FirstLoadOfTab(mode: _mode));
+      return;
+    }
     emit(
       state.copyWith(
         mode: _mode,
       ),
     );
   }
+
+  static Map<HomeTabMode, bool> _firstLoads = {
+    HomeTabMode.dashboard: false,
+    HomeTabMode.activity: false,
+    HomeTabMode.profile: false,
+    HomeTabMode.services: false,
+  };
 
   _homeTabInitialized() {
     add(HomeTabChanged());

@@ -1,4 +1,5 @@
 import 'package:eaton_spark/src/bloc/authentication/bloc.dart';
+import 'package:eaton_spark/src/bloc/home/bloc.dart';
 import 'package:eaton_spark/src/bloc/map/bloc.dart';
 import 'package:eaton_spark/src/bloc/services_tab/bloc.dart';
 import 'package:eaton_spark/src/globals/colors.dart';
@@ -105,12 +106,7 @@ class ServicesTab extends StatelessWidget {
         }, builder: (context, state) {
           return SingleChildScrollView(
             child: Container(
-              height: MediaQuery.of(context).size.height -
-                  // MediaQuery.of(context).padding.top
-                  kToolbarHeight
-              // MediaQuery.of(context).viewInsets.bottom -
-              // 100,
-              ,
+              height: (MediaQuery.of(context).size.height - kToolbarHeight),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,

@@ -28,7 +28,7 @@ class ServicesTabBottomSheet extends StatelessWidget {
                       ),
                       Text(
                         'Choose Station',
-                        style: TextStyle(fontSize: 20),
+                        style: TextStyle(fontSize: 20, color: Colors.white),
                       ),
                     ],
                   ),

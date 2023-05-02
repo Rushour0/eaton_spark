@@ -7,10 +7,14 @@ import 'package:eaton_spark/src/widgets/appbar/appbar.dart';
 import 'package:eaton_spark/src/widgets/card/article_card.dart';
 import 'package:eaton_spark/src/widgets/card/icon_card.dart';
 import 'package:eaton_spark/src/widgets/floating_button/dashboard.dart';
+import 'package:eaton_spark/src/widgets/interaction_fields/battery_view.dart';
 import 'package:eaton_spark/src/widgets/sections/horizontal.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:simple_animations/animation_builder/custom_animation_builder.dart';
+import 'package:simple_animations/animation_builder/play_animation_builder.dart';
+import 'dart:math' as math;
 
 class Dashboard extends StatelessWidget {
   const Dashboard({super.key});
@@ -30,6 +34,8 @@ class Dashboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       body: SingleChildScrollView(
         // physics: const BouncingScrollPhysics(),
@@ -37,48 +43,37 @@ class Dashboard extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
-            BlocProvider.value(
-              value: AuthenticationBloc(),
-              child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
-                builder: (context, state) {
-                  if (state.isLoggedIn) {
-                    return CustomAppbar(
-                      title: Padding(
-                        padding: EdgeInsets.fromLTRB(0, 0, 16, 8),
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text.rich(
-                            TextSpan(
-                              text: 'Welcome ',
-                              children: [
-                                TextSpan(
-                                  text: FirebaseAuth
-                                      .instance.currentUser!.displayName,
-                                  style: TextStyle(
-                                    color: GlobalColor.secondary,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                TextSpan(
-                                  text: '!',
-                                  style: TextStyle(
-                                    // color: GlobalColor.secondary,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
-                              style: TextStyle(
-                                fontSize: 18,
-                              ),
-                            ),
-                            style: TextStyle(fontSize: 18),
+            CustomAppbar(
+              title: Padding(
+                padding: EdgeInsets.fromLTRB(0, 0, 16, 8),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text.rich(
+                    TextSpan(
+                      text: 'Welcome ',
+                      children: [
+                        TextSpan(
+                          text: FirebaseAuth.instance.currentUser!.displayName,
+                          style: TextStyle(
+                            color: GlobalColor.secondary,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
+                        TextSpan(
+                          text: '!',
+                          style: TextStyle(
+                            // color: GlobalColor.secondary,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                      style: TextStyle(
+                        fontSize: 18,
                       ),
-                    );
-                  }
-                  return Text('You are not logged in');
-                },
+                    ),
+                    style: TextStyle(fontSize: 18),
+                  ),
+                ),
               ),
             ),
             const Padding(
@@ -118,14 +113,24 @@ class Dashboard extends StatelessWidget {
                 scrollable: false,
                 children: _options.entries
                     .map(
-                      (e) => IconCard(
-                        size: 70,
-                        icon: e.value,
-                        text: e.key.title,
-                        onTap: () {
-                          ServicesTabBloc().changeMode(e.key);
-                          HomeTabBloc().changeHomeTab(1);
-                        },
+                      (e) => CustomAnimationBuilder<double>(
+                        control: Control.play,
+                        tween: Tween<double>(begin: 0, end: 1),
+                        duration: Duration(milliseconds: 500),
+                        delay: Duration(milliseconds: e.key.index * 300),
+                        curve: Curves.linear,
+                        builder: (context, value, child) => Transform.translate(
+                          offset: Offset(0, -math.sin(value * math.pi) * 10),
+                          child: IconCard(
+                            size: 70,
+                            icon: e.value,
+                            text: e.key.title,
+                            onTap: () {
+                              ServicesTabBloc().changeMode(e.key);
+                              HomeTabBloc().changeHomeTab(1);
+                            },
+                          ),
+                        ),
                       ),
                     )
                     .toList()),
@@ -150,6 +155,7 @@ class Dashboard extends StatelessWidget {
                   )
                   .toList(),
             ),
+            BatteryView(),
             HorizontalSection(
               title: 'About Us',
               scrollable: true,
@@ -171,23 +177,22 @@ class Dashboard extends StatelessWidget {
                   )
                   .toList(),
             ),
-            // Align(
-            //   alignment: Alignment.bottomCenter,
-            //   child: Padding(
-            //     padding: const EdgeInsets.only(top: 24, bottom: 8.0),
-            //     child: Text(
-            //       'Made With Love :) Rushour0',
-            //       style: TextStyle(
-            //         fontSize: 8,
-            //         fontWeight: FontWeight.w100,
-            //       ),
-            //     ),
-            //   ),
-            // ),
           ],
         ),
       ),
-      floatingActionButton: FloatingButtonDashboard(),
+      floatingActionButton: PlayAnimationBuilder<double>(
+          onCompleted: () {
+            print('completed');
+          },
+          tween: Tween<double>(begin: 1, end: 0),
+          duration: Duration(seconds: 2),
+          curve: Curves.fastOutSlowIn,
+          builder: (context, value, child) {
+            return Padding(
+              padding: EdgeInsets.only(bottom: screenHeight * 0.8 * value),
+              child: const FloatingButtonDashboard(),
+            );
+          }),
     );
   }
 }

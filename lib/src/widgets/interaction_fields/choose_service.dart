@@ -1,6 +1,8 @@
+import 'package:eaton_spark/src/bloc/home/bloc.dart';
 import 'package:eaton_spark/src/bloc/services_tab/bloc.dart';
 import 'package:eaton_spark/src/bloc/theme/bloc.dart';
 import 'package:eaton_spark/src/globals/colors.dart';
+import 'package:eaton_spark/src/models/home_tabs.dart';
 import 'package:eaton_spark/src/models/service_tab.dart';
 import 'package:eaton_spark/src/services/google_maps/maps.dart';
 import 'package:eaton_spark/src/widgets/bottomsheet/service_bottomsheet.dart';
@@ -9,6 +11,7 @@ import 'package:eaton_spark/src/widgets/textfield/map_query_field.dart';
 import 'package:eaton_spark/src/widgets/textfield/textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:simple_animations/animation_builder/custom_animation_builder.dart';
 
 class ChooseService extends StatelessWidget {
   const ChooseService({super.key});
@@ -25,46 +28,61 @@ class ChooseService extends StatelessWidget {
     ServicesTabMode.plan_charge: Icon(Icons.calendar_month),
   };
 
+  static Widget _contents = Container();
+
   @override
   Widget build(BuildContext context) {
+    final HomeTabState homeTabState = context.watch<HomeTabBloc>().state;
     return BlocProvider<ServicesTabBloc>.value(
       value: ServicesTabBloc(),
       child: BlocBuilder<ServicesTabBloc, ServicesTabState>(
           builder: (context, state) {
+        if (homeTabState is FirstLoadOfTab &&
+            homeTabState.mode == HomeTabMode.services) {
+          _contents = Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: _options.entries
+                .map(
+                  (e) => CustomAnimationBuilder<double>(
+                    control: Control.play,
+                    tween: Tween<double>(begin: 1, end: 0),
+                    duration: Duration(milliseconds: 500),
+                    delay: Duration(milliseconds: e.key.index * 300),
+                    curve: Curves.fastOutSlowIn,
+                    builder: (context, value, child) => Padding(
+                      padding: EdgeInsets.only(right: 8.0 + 100 * value),
+                      child: IconCard(
+                          size: 70,
+                          icon: e.value,
+                          text: e.key.title,
+                          isSelected: e.key == state.mode,
+                          onTap: () async {
+                            BlocProvider.of<ServicesTabBloc>(context)
+                                .changeMode(e.key);
+                            if (e.key == ServicesTabMode.charge_now) {
+                              showModalBottomSheet(
+                                  isScrollControlled: true,
+                                  backgroundColor:
+                                      GlobalColor.primary.withAlpha(100),
+                                  enableDrag: true,
+                                  context: context,
+                                  builder: (context) =>
+                                      ServicesTabBottomSheet());
+                            }
+                          }),
+                    ),
+                  ),
+                )
+                .toList(),
+          );
+        }
         return Padding(
           padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: _options.entries
-                    .map(
-                      (e) => Padding(
-                        padding: const EdgeInsets.only(right: 8.0),
-                        child: IconCard(
-                            size: 70,
-                            icon: e.value,
-                            text: e.key.title,
-                            isSelected: e.key == state.mode,
-                            onTap: () async {
-                              BlocProvider.of<ServicesTabBloc>(context)
-                                  .changeMode(e.key);
-                              if (e.key == ServicesTabMode.charge_now) {
-                                showModalBottomSheet(
-                                    isScrollControlled: true,
-                                    backgroundColor: Colors.transparent,
-                                    enableDrag: true,
-                                    context: context,
-                                    builder: (context) =>
-                                        ServicesTabBottomSheet());
-                              }
-                            }),
-                      ),
-                    )
-                    .toList(),
-              ),
+              _contents,
               Divider(
                 color: Colors.lightGreen,
                 thickness: 2,
@@ -164,7 +182,7 @@ class MapInputField extends StatelessWidget {
                       );
                       showModalBottomSheet(
                           isScrollControlled: true,
-                          backgroundColor: Colors.transparent,
+                          backgroundColor: GlobalColor.primary.withAlpha(100),
                           enableDrag: true,
                           context: context,
                           builder: (context) => ServicesTabBottomSheet());

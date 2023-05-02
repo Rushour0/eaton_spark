@@ -21,3 +21,17 @@ class HomeTabState extends Equatable {
   @override
   List<Object> get props => [mode];
 }
+
+class FirstLoadOfTab extends HomeTabState {
+  const FirstLoadOfTab({
+    required super.mode,
+  });
+
+  @override
+  String toString() {
+    return '''FirstLoadOfTab { mode: $mode }''';
+  }
+
+  @override
+  List<Object> get props => [mode];
+}

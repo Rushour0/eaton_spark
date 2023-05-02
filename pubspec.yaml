@@ -49,6 +49,7 @@ dependencies:
   geolocator: ^9.0.2
   polyline_do: ^0.1.0
   simple_animations: ^5.0.0+3
+  wave: ^0.2.2
 
 dev_dependencies:
   flutter_test:

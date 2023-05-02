@@ -17,6 +17,39 @@ class StationInfoCard extends StatelessWidget {
           leading: const Icon(Icons.electric_car_rounded),
           title: Text(name),
           subtitle: Text(address),
+          // isThreeLine: true,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Row(
+              children: [
+                Icon(
+                  Icons.location_on,
+                  color: GlobalColor.secondary,
+                ),
+                Text(' 3km away', style: TextStyle(fontSize: 12)),
+              ],
+            ),
+            Row(
+              children: [
+                Icon(
+                  Icons.electric_car_rounded,
+                  color: GlobalColor.primary,
+                ),
+                Text(' 7 kWh AC', style: TextStyle(fontSize: 12)),
+              ],
+            ),
+            Row(
+              children: [
+                Icon(
+                  Icons.timelapse_rounded,
+                  color: GlobalColor.tertiary,
+                ),
+                Text(' Free in 20mins', style: TextStyle(fontSize: 12)),
+              ],
+            ),
+          ],
         ),
         const Divider(
           thickness: 2,

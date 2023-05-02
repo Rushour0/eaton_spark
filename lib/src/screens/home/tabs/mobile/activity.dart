@@ -1,11 +1,14 @@
 import 'package:eaton_spark/src/bloc/authentication/bloc.dart';
+import 'package:eaton_spark/src/bloc/home/bloc.dart';
 import 'package:eaton_spark/src/globals/colors.dart';
+import 'package:eaton_spark/src/models/home_tabs.dart';
 import 'package:eaton_spark/src/widgets/appbar/appbar.dart';
 import 'package:eaton_spark/src/widgets/sections/grid.dart';
 import 'package:eaton_spark/src/widgets/sections/horizontal.dart';
 import 'package:eaton_spark/src/widgets/sections/vertical.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:simple_animations/animation_builder/play_animation_builder.dart';
 
 class ActivityTab extends StatelessWidget {
   const ActivityTab({super.key});
@@ -208,89 +211,111 @@ class ActivityTab extends StatelessWidget {
     ),
   ];
 
+  static List<Widget> _content = [Container()];
+
+  void builder() {
+    _content = [
+      PlayAnimationBuilder<double>(
+          tween: Tween(begin: 0.4, end: 1.0),
+          duration: Duration(seconds: 3),
+          curve: Curves.fastOutSlowIn,
+          builder: (context, value, child) {
+            return VerticalSection(
+                title: 'Upcoming',
+                overallHeight: 225 * value,
+                // crossAxisCount: 1,
+                // spacing: ,
+                children: _ulist);
+          }),
+      PlayAnimationBuilder<double>(
+          tween: Tween(begin: 0.4, end: 1.0),
+          duration: Duration(seconds: 3),
+          curve: Curves.fastOutSlowIn,
+          builder: (context, value, child) {
+            return VerticalSection(
+                title: 'Past',
+                overallHeight: 225 * value,
+                // crossAxisCount: 1,
+                // spacing: ,
+                children: _list);
+          })
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<AuthenticationBloc>.value(
-          value: AuthenticationBloc(),
-        ),
-      ],
-      child: Scaffold(
+    return BlocProvider.value(
+      value: BlocProvider.of<HomeTabBloc>(context),
+      child: BlocBuilder<HomeTabBloc, HomeTabState>(
+          buildWhen: (previous, current) {
+        print(current);
+        if (current is FirstLoadOfTab && current.mode == HomeTabMode.activity) {
+          builder();
+          return true;
+        }
+        return false;
+      }, builder: (context, state) {
+        return Scaffold(
           body: SingleChildScrollView(
-        child: Container(
-          height: MediaQuery.of(context).size.height -
-              // MediaQuery.of(context).padding.top
-              kToolbarHeight
-          // MediaQuery.of(context).viewInsets.bottom -
-          // 100,
-          ,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Column(
-                children: [
-                  CustomAppbar(
-                    title: Padding(
-                      padding: EdgeInsets.fromLTRB(0, 0, 16, 8),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text.rich(
-                          TextSpan(
-                            text: "What have you been ",
-                            children: [
-                              TextSpan(
-                                text: "upto",
-                                style: TextStyle(
-                                  color: Colors.yellow,
-                                  fontWeight: FontWeight.bold,
+            child: Container(
+              height: MediaQuery.of(context).size.height - kToolbarHeight,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                      Column(
+                        children: [
+                          CustomAppbar(
+                            title: Padding(
+                              padding: EdgeInsets.fromLTRB(0, 0, 16, 8),
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text.rich(
+                                  TextSpan(
+                                    text: "What have you been ",
+                                    children: [
+                                      TextSpan(
+                                        text: "upto",
+                                        style: TextStyle(
+                                          color: Colors.yellow,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      TextSpan(
+                                        text: "?",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  style: TextStyle(fontSize: 18),
                                 ),
                               ),
-                              TextSpan(
-                                text: "?",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
+                            ),
                           ),
-                          style: TextStyle(fontSize: 18),
-                        ),
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Padding(
+                              padding: EdgeInsets.fromLTRB(16, 8, 16, 0),
+                              child: Text(
+                                'Activity',
+                                style: TextStyle(
+                                  fontSize: 48,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Padding(
-                      padding: EdgeInsets.fromLTRB(16, 8, 16, 0),
-                      child: Text(
-                        'Activity',
-                        style: TextStyle(
-                          fontSize: 48,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+                    ] +
+                    _content,
               ),
-              VerticalSection(
-                  title: 'Upcoming',
-                  overallHeight: 225,
-                  // crossAxisCount: 1,
-                  // spacing: ,
-                  children: _ulist),
-              VerticalSection(
-                  title: 'Past',
-                  overallHeight: 225,
-                  // crossAxisCount: 1,
-                  // spacing: ,
-                  children: _list),
-            ],
+            ),
           ),
-        ),
-      )),
+        );
+      }),
     );
   }
 }

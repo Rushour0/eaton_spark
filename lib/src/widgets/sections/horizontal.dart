@@ -48,15 +48,18 @@ class HorizontalSection extends StatelessWidget {
                     ),
                   )
                 : Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: children
                         .map(
-                          (e) => Padding(
-                            padding: EdgeInsets.only(
-                                right: rightPadding, bottom: verticalPadding),
-                            child: e,
-                          ),
+                          (e) => children.last == e
+                              ? e
+                              : Padding(
+                                  padding: EdgeInsets.only(
+                                      right: rightPadding,
+                                      bottom: verticalPadding),
+                                  child: e,
+                                ),
                         )
                         .toList(),
                   ),

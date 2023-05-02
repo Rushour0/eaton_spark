@@ -58,16 +58,6 @@ class GoogleMapBloc extends Bloc<GoogleMapEvent, GoogleMapState> {
     changeMap(
       GoogleMapStatus.loading,
     );
-    GoogleMapService.currentLatLng().then((value) async {
-      GoogleMapService.controller!.animateCamera(
-        CameraUpdate.newCameraPosition(
-          CameraPosition(
-            target: value,
-            zoom: 15,
-          ),
-        ),
-      );
-    });
   }
 
   static GoogleMapStatus _status = GoogleMapStatus.searching;
