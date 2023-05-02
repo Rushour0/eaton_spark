@@ -10,6 +10,48 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class ActivityTab extends StatelessWidget {
   const ActivityTab({super.key});
 
+  static final List<Widget> _ulist = [
+    // Cards for past recent activity of charging and swapping
+    Container(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          ListTile(
+            leading: Icon(Icons.charging_station),
+            title: Text('Scheduled Charge'),
+            subtitle: Text('in 10 hours'),
+            trailing: Text(
+              '₹ 140',
+              style: TextStyle(
+                color: Colors.green,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ],
+      ),
+    ),
+    Container(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          ListTile(
+            leading: Icon(Icons.swap_horiz_sharp),
+            title: Text('Battery Swap'),
+            subtitle: Text('in 25 hours'),
+            trailing: Text(
+              '₹ 100',
+              style: TextStyle(
+                color: Colors.green,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ],
+      ),
+    ),
+  ];
+
   static final List<Widget> _list = [
     // Cards for past recent activity of charging and swapping
     Container(
@@ -175,87 +217,80 @@ class ActivityTab extends StatelessWidget {
         ),
       ],
       child: Scaffold(
-          floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-          floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
-          floatingActionButton: FloatingActionButton(
-            heroTag: 'activity',
-            onPressed: () {},
-            child: const Icon(Icons.add),
-          ),
           body: SingleChildScrollView(
-            child: Container(
-              height: MediaQuery.of(context).size.height -
-                  // MediaQuery.of(context).padding.top
-                  kToolbarHeight
-              // MediaQuery.of(context).viewInsets.bottom -
-              // 100,
-              ,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
+        child: Container(
+          height: MediaQuery.of(context).size.height -
+              // MediaQuery.of(context).padding.top
+              kToolbarHeight
+          // MediaQuery.of(context).viewInsets.bottom -
+          // 100,
+          ,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Column(
                 children: [
-                  Column(
-                    children: [
-                      CustomAppbar(
-                        title: Padding(
-                          padding: EdgeInsets.fromLTRB(0, 0, 16, 8),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text.rich(
-                              TextSpan(
-                                text: "What have you been ",
-                                children: [
-                                  TextSpan(
-                                    text: "upto",
-                                    style: TextStyle(
-                                      color: Colors.yellow,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text: "?",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              style: TextStyle(fontSize: 18),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Align(
+                  CustomAppbar(
+                    title: Padding(
+                      padding: EdgeInsets.fromLTRB(0, 0, 16, 8),
+                      child: Align(
                         alignment: Alignment.centerLeft,
-                        child: Padding(
-                          padding: EdgeInsets.fromLTRB(16, 8, 16, 0),
-                          child: Text(
-                            'Activity',
-                            style: TextStyle(
-                              fontSize: 48,
-                            ),
+                        child: Text.rich(
+                          TextSpan(
+                            text: "What have you been ",
+                            children: [
+                              TextSpan(
+                                text: "upto",
+                                style: TextStyle(
+                                  color: Colors.yellow,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              TextSpan(
+                                text: "?",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
                           ),
+                          style: TextStyle(fontSize: 18),
                         ),
                       ),
-                    ],
+                    ),
                   ),
-                  VerticalSection(
-                      title: 'Past',
-                      overallHeight: 225,
-                      // crossAxisCount: 1,
-                      // spacing: ,
-                      children: _list),
-                  VerticalSection(
-                      title: 'Upcoming',
-                      overallHeight: 225,
-                      // crossAxisCount: 1,
-                      // spacing: ,
-                      children: _list),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(16, 8, 16, 0),
+                      child: Text(
+                        'Activity',
+                        style: TextStyle(
+                          fontSize: 48,
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
-            ),
-          )),
+              VerticalSection(
+                  title: 'Upcoming',
+                  overallHeight: 225,
+                  // crossAxisCount: 1,
+                  // spacing: ,
+                  children: _ulist),
+              VerticalSection(
+                  title: 'Past',
+                  overallHeight: 225,
+                  // crossAxisCount: 1,
+                  // spacing: ,
+                  children: _list),
+            ],
+          ),
+        ),
+      )),
     );
   }
 }

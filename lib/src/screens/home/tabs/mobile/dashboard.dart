@@ -47,8 +47,30 @@ class Dashboard extends StatelessWidget {
                         padding: EdgeInsets.fromLTRB(0, 0, 16, 8),
                         child: Align(
                           alignment: Alignment.centerLeft,
-                          child: Text(
-                            "Welcome ${FirebaseAuth.instance.currentUser!.displayName}",
+                          child: Text.rich(
+                            TextSpan(
+                              text: 'Welcome ',
+                              children: [
+                                TextSpan(
+                                  text: FirebaseAuth
+                                      .instance.currentUser!.displayName,
+                                  style: TextStyle(
+                                    color: GlobalColor.secondary,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: '!',
+                                  style: TextStyle(
+                                    // color: GlobalColor.secondary,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                              style: TextStyle(
+                                fontSize: 18,
+                              ),
+                            ),
                             style: TextStyle(fontSize: 18),
                           ),
                         ),
@@ -149,19 +171,19 @@ class Dashboard extends StatelessWidget {
                   )
                   .toList(),
             ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding: const EdgeInsets.only(top: 24, bottom: 8.0),
-                child: Text(
-                  'Made With Love :) Rushour0',
-                  style: TextStyle(
-                    fontSize: 8,
-                    fontWeight: FontWeight.w100,
-                  ),
-                ),
-              ),
-            ),
+            // Align(
+            //   alignment: Alignment.bottomCenter,
+            //   child: Padding(
+            //     padding: const EdgeInsets.only(top: 24, bottom: 8.0),
+            //     child: Text(
+            //       'Made With Love :) Rushour0',
+            //       style: TextStyle(
+            //         fontSize: 8,
+            //         fontWeight: FontWeight.w100,
+            //       ),
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),

@@ -38,133 +38,127 @@ class SigninMobile extends StatelessWidget {
           left: screenWidth * 0.1,
           right: screenWidth * 0.1,
         ),
-        child: NotificationListener<OverscrollIndicatorNotification>(
-          onNotification: (overscroll) {
-            overscroll.disallowIndicator();
-            return true;
-          },
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(
-                    top: screenHeight * 0.1,
-                  ),
-                  child: Align(
-                    alignment: Alignment.topLeft,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // SvgPicture.string(
-                        //   GlobalSvg.logoSvg,
-                        //   width: screenWidth * 0.25,
-                        // ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              title,
-                              style: TextStyle(
-                                color: GlobalColor.text,
-                                fontSize: screenHeight * 0.05,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Text(
-                              'Sign In',
-                              style: TextStyle(
-                                color: GlobalColor.text.withAlpha(192),
-                                fontSize: screenHeight * 0.035,
-                                fontWeight: FontWeight.w100,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ]
-                          .map(
-                            (e) => Padding(
-                              padding:
-                                  EdgeInsets.only(bottom: screenHeight * 0.05),
-                              child: e,
-                            ),
-                          )
-                          .toList(),
-                    ),
-                  ),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(
+                  top: screenHeight * 0.1,
                 ),
-                Column(
-                  children: [
-                    GenericTextField(
-                      controller: emailController,
-                      labelText: 'Email',
-                    ),
-                    GenericTextField(
-                      controller: passwordController,
-                      labelText: 'Password',
-                      obscureText: true,
-                    ),
-                  ],
-                ),
-                Column(
+                child: Align(
+                  alignment: Alignment.topLeft,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                  GenericElevatedButton(
-                    text: 'Sign In',
-                    onPressed: onSignin,
-                  ),
-                  RichText(
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                          text: 'Forgot Password ?',
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () async {
-                              await Navigator.pushNamedAndRemoveUntil(context,
-                                  AppRoutes.forgotPassword, (route) => false);
-                            },
-                          style: TextStyle(
-                            decoration: TextDecoration.underline,
-                            color: GlobalColor.text,
-                            fontSize: screenHeight * 0.02,
-                            fontWeight: FontWeight.w100,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SvgPicture.string(
+                            GlobalSvg.logoSvg,
+                            width: screenWidth * 0.3,
                           ),
-                        ),
-                        TextSpan(
-                          text: '  |  ',
-                          style: TextStyle(
-                            color: GlobalColor.text,
-                            fontSize: screenHeight * 0.02,
-                            fontWeight: FontWeight.w100,
+                          Text(
+                            title,
+                            style: TextStyle(
+                              color: GlobalColor.text,
+                              fontSize: screenHeight * 0.05,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                        TextSpan(
-                          text: 'Sign Up',
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () async {
-                              await Navigator.pushNamedAndRemoveUntil(
-                                  context, AppRoutes.signup, (route) => false);
-                            },
-                          style: TextStyle(
-                            decoration: TextDecoration.underline,
-                            color: GlobalColor.text,
-                            fontSize: screenHeight * 0.02,
-                            fontWeight: FontWeight.w100,
+                          Text(
+                            'Sign In',
+                            style: TextStyle(
+                              color: GlobalColor.text.withAlpha(192),
+                              fontSize: screenHeight * 0.035,
+                              fontWeight: FontWeight.w100,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ]
+                        .map(
+                          (e) => Padding(
+                            padding:
+                                EdgeInsets.only(bottom: screenHeight * 0.05),
+                            child: e,
                           ),
                         )
-                      ],
-                    ),
+                        .toList(),
                   ),
-                ]
-                        .map((e) => Padding(
-                            padding: EdgeInsets.only(
-                              top: screenHeight * 0.025,
-                              // bottom: screenHeight * 0.025,
-                            ),
-                            child: e))
-                        .toList())
-              ],
-            ),
+                ),
+              ),
+              Column(
+                children: [
+                  GenericTextField(
+                    controller: emailController,
+                    labelText: 'Email',
+                  ),
+                  GenericTextField(
+                    controller: passwordController,
+                    labelText: 'Password',
+                    obscureText: true,
+                  ),
+                ],
+              ),
+              Column(
+                  children: [
+                GenericElevatedButton(
+                  text: 'Sign In',
+                  onPressed: onSignin,
+                ),
+                RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: 'Forgot Password ?',
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () async {
+                            await Navigator.pushNamedAndRemoveUntil(context,
+                                AppRoutes.forgotPassword, (route) => false);
+                          },
+                        style: TextStyle(
+                          decoration: TextDecoration.underline,
+                          color: GlobalColor.text,
+                          fontSize: screenHeight * 0.02,
+                          fontWeight: FontWeight.w100,
+                        ),
+                      ),
+                      TextSpan(
+                        text: '  |  ',
+                        style: TextStyle(
+                          color: GlobalColor.text,
+                          fontSize: screenHeight * 0.02,
+                          fontWeight: FontWeight.w100,
+                        ),
+                      ),
+                      TextSpan(
+                        text: 'Sign Up',
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () async {
+                            await Navigator.pushNamedAndRemoveUntil(
+                                context, AppRoutes.signup, (route) => false);
+                          },
+                        style: TextStyle(
+                          decoration: TextDecoration.underline,
+                          color: GlobalColor.text,
+                          fontSize: screenHeight * 0.02,
+                          fontWeight: FontWeight.w100,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ]
+                      .map((e) => Padding(
+                          padding: EdgeInsets.only(
+                            top: screenHeight * 0.025,
+                            // bottom: screenHeight * 0.025,
+                          ),
+                          child: e))
+                      .toList())
+            ],
           ),
         ),
       ),

@@ -130,7 +130,7 @@ class ServicesTab extends StatelessWidget {
                                   TextSpan(
                                     text: "service",
                                     style: TextStyle(
-                                      color: Colors.green,
+                                      color: GlobalColor.secondary,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),

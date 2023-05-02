@@ -1,3 +1,4 @@
+import 'package:eaton_spark/src/bloc/authentication/bloc.dart';
 import 'package:eaton_spark/src/models/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -5,7 +6,6 @@ class AuthenticationService {
   FirebaseAuth auth = FirebaseAuth.instance;
 
   Stream<UserModel> retrieveCurrentUser() {
-    
     return auth.authStateChanges().map((User? user) {
       if (user != null) {
         UserModel.setData(
@@ -74,6 +74,7 @@ class AuthenticationService {
   }
 
   Future<void> signOut() async {
+    AuthenticationBloc().loggedOut();
     return await FirebaseAuth.instance.signOut();
   }
 }

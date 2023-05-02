@@ -19,8 +19,8 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     final double screenHeight = MediaQuery.of(context).size.height;
     final double screenWidth = MediaQuery.of(context).size.width;
-    return BlocProvider(
-      create: (_) => ThemeBloc(),
+    return BlocProvider<ThemeBloc>.value(
+      value: ThemeBloc(),
       child: BlocBuilder<ThemeBloc, ThemeState>(builder: (context, state) {
         return AppBar(elevation: 0, title: title, centerTitle: false, actions: [
           IconButton(

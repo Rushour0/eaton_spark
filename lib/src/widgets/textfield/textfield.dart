@@ -1,5 +1,6 @@
 import 'package:eaton_spark/src/globals/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:simple_animations/animation_builder/play_animation_builder.dart';
 
 class GenericTextField extends StatefulWidget {
   const GenericTextField({
@@ -31,73 +32,85 @@ class GenericTextFieldState extends State<GenericTextField> {
   @override
   Widget build(BuildContext context) {
     final double screenHeight = MediaQuery.of(context).size.height;
+    final double screenWidth = MediaQuery.of(context).size.width;
 
-    return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            widget.labelText,
-            style: TextStyle(
-              color: GlobalColor.text,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          TextFormField(
-            controller: widget.controller,
-            obscureText: obscureText,
-            keyboardType:
-                widget.phone ? TextInputType.phone : TextInputType.text,
-            style: TextStyle(
-              color: GlobalColor.text,
-            ),
-            decoration: InputDecoration(
-              hintText: widget.labelText,
-              hintStyle: TextStyle(
-                color: GlobalColor.textFieldBorder,
-              ),
-              // labelText: widget.labelText,
-              errorText: widget.errorBool ? widget.errorText : null,
-              suffixIcon: widget.obscureText
-                  ? IconButton(
-                      onPressed: () {
-                        setState(() {
-                          obscureText = !obscureText;
-                        });
-                      },
-                      icon: Icon(
-                        obscureText ? Icons.visibility : Icons.visibility_off,
+    return PlayAnimationBuilder<double>(
+        tween: Tween(begin: 0.5, end: 1.0),
+        duration: const Duration(seconds: 1),
+        curve: Curves.fastOutSlowIn,
+        builder: (context, value, child) {
+          return SizedBox(
+            width: screenWidth * value * 0.9,
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    widget.labelText,
+                    style: TextStyle(
+                      color: GlobalColor.text,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  TextFormField(
+                    controller: widget.controller,
+                    obscureText: obscureText,
+                    keyboardType:
+                        widget.phone ? TextInputType.phone : TextInputType.text,
+                    style: TextStyle(
+                      color: GlobalColor.text,
+                    ),
+                    decoration: InputDecoration(
+                      hintText: widget.labelText,
+                      hintStyle: TextStyle(
                         color: GlobalColor.textFieldBorder,
                       ),
-                    )
-                  : null,
-              fillColor: GlobalColor.textFieldBorder,
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-                borderSide: BorderSide(
-                  color: GlobalColor.textFieldBorder,
-                ),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-                borderSide: const BorderSide(
-                  color: GlobalColor.primary,
-                ),
-              ),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-                borderSide: const BorderSide(
-                  color: GlobalColor.primary,
-                ),
-              ),
-            ),
-          ),
-        ]
-            .map((e) => Padding(
-                  padding: EdgeInsets.only(
-                    top: screenHeight * 0.015,
+                      // labelText: widget.labelText,
+                      errorText: widget.errorBool ? widget.errorText : null,
+                      suffixIcon: widget.obscureText
+                          ? IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  obscureText = !obscureText;
+                                });
+                              },
+                              icon: Icon(
+                                obscureText
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                                color: GlobalColor.textFieldBorder,
+                              ),
+                            )
+                          : null,
+                      fillColor: GlobalColor.textFieldBorder,
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: BorderSide(
+                          color: GlobalColor.textFieldBorder,
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: const BorderSide(
+                          color: GlobalColor.primary,
+                        ),
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: const BorderSide(
+                          color: GlobalColor.primary,
+                        ),
+                      ),
+                    ),
                   ),
-                  child: e,
-                ))
-            .toList());
+                ]
+                    .map((e) => Padding(
+                          padding: EdgeInsets.only(
+                            top: screenHeight * 0.015,
+                          ),
+                          child: e,
+                        ))
+                    .toList()),
+          );
+        });
   }
 }
