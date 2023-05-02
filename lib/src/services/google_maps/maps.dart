@@ -50,7 +50,7 @@ class GoogleMapService {
         _polylines.clear();
         _stationsNearby();
         break;
-      case ServicesTabMode.explore_route:
+      case ServicesTabMode.intercity:
         _markers.clear();
         _polylines.clear();
         _getRoute(source: source, destination: destination, midpoint: true);

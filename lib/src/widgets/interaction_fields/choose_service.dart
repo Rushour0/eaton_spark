@@ -16,7 +16,7 @@ class ChooseService extends StatelessWidget {
     ServicesTabMode.charge_now: ImageIcon(
       AssetImage('assets/images/charging-station.png'),
     ),
-    ServicesTabMode.explore_route: ImageIcon(
+    ServicesTabMode.intercity: ImageIcon(
       AssetImage('assets/images/route.png'),
     ),
     ServicesTabMode.battery_swap: ImageIcon(
@@ -38,26 +38,38 @@ class ChooseService extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: _options.entries
                     .map(
-                      (e) => IconCard(
-                          size: 70,
-                          icon: e.value,
-                          text: e.key.title,
-                          isSelected: e.key == state.mode,
-                          onTap: () async {
-                            BlocProvider.of<ServicesTabBloc>(context)
-                                .changeMode(e.key);
-                            await showModalBottomSheet(
-                                isScrollControlled: true,
-                                backgroundColor: Colors.transparent,
-                                enableDrag: true,
-                                context: context,
-                                builder: (context) => ServicesTabBottomSheet());
-                          }),
+                      (e) => Padding(
+                        padding: const EdgeInsets.only(right: 8.0),
+                        child: IconCard(
+                            size: 70,
+                            icon: e.value,
+                            text: e.key.title,
+                            isSelected: e.key == state.mode,
+                            onTap: () async {
+                              BlocProvider.of<ServicesTabBloc>(context)
+                                  .changeMode(e.key);
+                              if (e.key == ServicesTabMode.charge_now) {
+                                showModalBottomSheet(
+                                    isScrollControlled: true,
+                                    backgroundColor: Colors.transparent,
+                                    enableDrag: true,
+                                    context: context,
+                                    builder: (context) =>
+                                        ServicesTabBottomSheet());
+                              }
+                            }),
+                      ),
                     )
                     .toList(),
+              ),
+              Divider(
+                color: Colors.lightGreen,
+                thickness: 2,
+                indent: 8,
+                endIndent: 8,
               ),
               if (state.mode != ServicesTabMode.charge_now &&
                   state.mode != ServicesTabMode.map)
@@ -96,7 +108,7 @@ class MapInputField extends StatelessWidget {
       TextEditingController();
 
   static final Map<ServicesTabMode, List<Widget>> _modeWise = {
-    ServicesTabMode.explore_route: <Widget>[
+    ServicesTabMode.intercity: <Widget>[
       MapQueryField(controller: _fromController, labelText: 'From'),
       MapQueryField(controller: _toController, labelText: 'To'),
     ],
@@ -115,38 +127,54 @@ class MapInputField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ExpansionTile(
-      key: Key('map_input_field'),
-      initiallyExpanded: true,
-      title: Text(
-        mode.title,
-        style: TextStyle(
-          color: GlobalColor.primary.withRed(240),
-          fontSize: 18,
+    return Theme(
+      data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+      child: Container(
+        padding: const EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.primary.withAlpha(20),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: ExpansionTile(
+          key: Key('map_input_field'),
+          initiallyExpanded: true,
+          title: Text(
+            mode.title,
+            style: TextStyle(
+              color: GlobalColor.primary.withRed(240),
+              fontSize: 18,
+            ),
+          ),
+          children: _modeWise[mode]! +
+              [
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      GoogleMapService.mode(
+                        mode,
+                        source: _fromController.text,
+                        destination: _toController.text,
+                        batteryLocation: _batteryLocationController.text,
+                        batteryDate: _batterydateController.text,
+                        batteryTime: _batterytimeController.text,
+                        planLocation: _planLocationController.text,
+                        planDate: _plandateController.text,
+                        planTime: _plantimeController.text,
+                      );
+                      showModalBottomSheet(
+                          isScrollControlled: true,
+                          backgroundColor: Colors.transparent,
+                          enableDrag: true,
+                          context: context,
+                          builder: (context) => ServicesTabBottomSheet());
+                    },
+                    child: Text('Go'),
+                  ),
+                ),
+              ],
         ),
       ),
-      children: _modeWise[mode]! +
-          [
-            Align(
-              alignment: Alignment.bottomRight,
-              child: ElevatedButton(
-                onPressed: () {
-                  GoogleMapService.mode(
-                    mode,
-                    source: _fromController.text,
-                    destination: _toController.text,
-                    batteryLocation: _batteryLocationController.text,
-                    batteryDate: _batterydateController.text,
-                    batteryTime: _batterytimeController.text,
-                    planLocation: _planLocationController.text,
-                    planDate: _plandateController.text,
-                    planTime: _plantimeController.text,
-                  );
-                },
-                child: Text('Go'),
-              ),
-            ),
-          ],
     );
   }
 }

@@ -1,12 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-enum ServicesTabMode {
-  map,
-  charge_now,
-  explore_route,
-  battery_swap,
-  plan_charge
-}
+enum ServicesTabMode { map, charge_now, intercity, battery_swap, plan_charge }
 
 extension Title on ServicesTabMode {
   String get title {

@@ -36,9 +36,9 @@ class IconCard extends StatelessWidget {
             gradient: LinearGradient(
               colors: isSelected
                   ? [
-                      GlobalColor.success.withOpacity(0.5),
-                      GlobalColor.success.withOpacity(0.8),
-                      GlobalColor.success,
+                      GlobalColor.secondary.withOpacity(0.5),
+                      GlobalColor.secondary.withOpacity(0.8),
+                      GlobalColor.secondary,
                     ]
                   : [
                       Theme.of(context).colorScheme.primary.withOpacity(0.5),

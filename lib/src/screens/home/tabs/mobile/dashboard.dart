@@ -19,7 +19,7 @@ class Dashboard extends StatelessWidget {
     ServicesTabMode.charge_now: ImageIcon(
       AssetImage('assets/images/charging-station.png'),
     ),
-    ServicesTabMode.explore_route: ImageIcon(
+    ServicesTabMode.intercity: ImageIcon(
       AssetImage('assets/images/route.png'),
     ),
     ServicesTabMode.battery_swap: ImageIcon(
