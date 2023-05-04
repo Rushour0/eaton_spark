@@ -19,6 +19,8 @@ class ProfileCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double screenHeight = MediaQuery.of(context).size.height;
+    final double screenWidth = MediaQuery.of(context).size.width;
     if (isLongCard) {
       return Card(
         child: InkWell(
@@ -50,9 +52,10 @@ class ProfileCard extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              
               Container(
-                height: 70,
-                width: 70,
+                height: screenWidth * 0.2,
+                width: screenWidth * 0.2,
                 child: iconWidget,
               ),
               Text(title),

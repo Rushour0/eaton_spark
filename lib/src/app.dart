@@ -47,48 +47,58 @@ class App extends StatelessWidget {
               initialRoute: AppRoutes.splash,
               onGenerateRoute: (route) {
                 return MaterialPageRoute(builder: (context) {
-                  switch (route.name!.split('?')[0]) {
-                    case AppRoutes.splash:
-                      return const Splash();
-                    case AppRoutes.home:
-                      return MainPage();
-                    case AppRoutes.forgotPassword:
-                      return ForgotPassword(
-                        title: _title,
-                        successCallback: () {
-                          Navigator.pushNamedAndRemoveUntil(
-                              context, AppRoutes.home, (context) => false);
-                        },
-                      );
-                    case AppRoutes.signin:
-                      return Signin(
-                        title: _title,
-                        successCallback: () {
-                          Navigator.pushNamedAndRemoveUntil(
-                              context, AppRoutes.home, (context) => false);
-                        },
-                      );
+                  final MediaQueryData data = MediaQuery.of(context);
+                  return MediaQuery(
+                    data: data.copyWith(
+                      textScaleFactor: 0.8,
+                    ),
+                    child: Builder(
+                      builder: (context) {
+                        switch (route.name!.split('?')[0]) {
+                          case AppRoutes.splash:
+                            return const Splash();
+                          case AppRoutes.home:
+                            return MainPage();
+                          case AppRoutes.forgotPassword:
+                            return ForgotPassword(
+                              title: _title,
+                              successCallback: () {
+                                Navigator.pushNamedAndRemoveUntil(context,
+                                    AppRoutes.home, (context) => false);
+                              },
+                            );
+                          case AppRoutes.signin:
+                            return Signin(
+                              title: _title,
+                              successCallback: () {
+                                Navigator.pushNamedAndRemoveUntil(context,
+                                    AppRoutes.home, (context) => false);
+                              },
+                            );
 
-                    /// signup, signout, and resetPassword are not implemented
-                    case AppRoutes.signup:
-                      return Signup(
-                        title: _title,
-                        successCallback: () {
-                          print('signup success');
-                        },
-                      );
+                          /// signup, signout, and resetPassword are not implemented
+                          case AppRoutes.signup:
+                            return Signup(
+                              title: _title,
+                              successCallback: () {
+                                print('signup success');
+                              },
+                            );
 
-                    case AppRoutes.resetPassword:
-                      return ResetPassword(
-                        title: _title,
-                        successCallback: () {
-                          print('reset password success');
-                        },
-                        params: route.name!.split('?')[1],
-                      );
-                    default:
-                      return const NotFound();
-                  }
+                          case AppRoutes.resetPassword:
+                            return ResetPassword(
+                              title: _title,
+                              successCallback: () {
+                                print('reset password success');
+                              },
+                              params: route.name!.split('?')[1],
+                            );
+                          default:
+                            return const NotFound();
+                        }
+                      },
+                    ),
+                  );
                 });
               });
         });

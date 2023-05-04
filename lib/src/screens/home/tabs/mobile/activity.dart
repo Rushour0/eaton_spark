@@ -205,7 +205,7 @@ class ActivityTab extends StatelessWidget {
                                       TextSpan(
                                         text: "upto",
                                         style: TextStyle(
-                                          color: Colors.yellow,
+                                          color: GlobalColor.primary,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),

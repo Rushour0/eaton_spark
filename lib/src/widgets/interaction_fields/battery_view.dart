@@ -69,7 +69,11 @@ class BatteryView extends StatelessWidget {
                       width: screenWidth / 2.5,
                       padding: EdgeInsets.symmetric(horizontal: 10),
                       decoration: BoxDecoration(
-                        color: GlobalColor.background,
+                        // color: GlobalColor.background,
+                        border: Border.all(
+                          color: GlobalColor.primary,
+                          width: 1,
+                        ),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: DropdownButton<String>(

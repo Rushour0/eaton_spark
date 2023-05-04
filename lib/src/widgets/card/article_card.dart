@@ -44,7 +44,7 @@ class ArticleCard extends StatelessWidget {
             width: imageWidth,
             child: Text(
               subtitle,
-              textAlign: TextAlign.justify,
+              textAlign: TextAlign.left,
               style: Theme.of(context).textTheme.bodySmall,
             ),
           ),

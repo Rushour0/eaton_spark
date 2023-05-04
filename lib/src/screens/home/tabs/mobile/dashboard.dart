@@ -85,6 +85,8 @@ class Dashboard extends StatelessWidget {
   Widget build(BuildContext context) {
     final double screenHeight = MediaQuery.of(context).size.height;
 
+    final double screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       body: SingleChildScrollView(
         // physics: const BouncingScrollPhysics(),
@@ -104,7 +106,7 @@ class Dashboard extends StatelessWidget {
                         TextSpan(
                           text: FirebaseAuth.instance.currentUser!.displayName,
                           style: TextStyle(
-                            color: GlobalColor.secondary,
+                            color: GlobalColor.primary,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -141,7 +143,6 @@ class Dashboard extends StatelessWidget {
                     TextSpan(
                       text: '⚡',
                       style: TextStyle(
-                        color: Colors.amber,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -156,8 +157,8 @@ class Dashboard extends StatelessWidget {
               ),
             ),
             HorizontalSection(
-                verticalPadding: 24,
-                height: 70,
+                verticalPadding: screenHeight * 0.03,
+                height: screenHeight * 0.3,
                 title: 'Services',
                 scrollable: false,
                 children: _options.entries
@@ -171,7 +172,7 @@ class Dashboard extends StatelessWidget {
                         builder: (context, value, child) => Transform.translate(
                           offset: Offset(0, -math.sin(value * math.pi) * 10),
                           child: IconCard(
-                            size: 70,
+                            size: screenWidth * 0.2 * value,
                             icon: e.value,
                             text: e.key.title,
                             onTap: () {
@@ -186,9 +187,9 @@ class Dashboard extends StatelessWidget {
             HorizontalSection(
               title: 'Nearby Stations',
               scrollable: true,
-              height: 175,
-              verticalPadding: 24,
-              rightPadding: 24,
+              height: screenHeight * 0.3,
+              verticalPadding: screenHeight * 0.03,
+              rightPadding: screenWidth * 0.03,
               children: _stations
                   .map(
                     (station) => ArticleCard(
@@ -204,9 +205,9 @@ class Dashboard extends StatelessWidget {
             HorizontalSection(
               title: 'About Us',
               scrollable: true,
-              height: 175,
-              verticalPadding: 24,
-              rightPadding: 24,
+              height: screenHeight * 0.3,
+              verticalPadding: screenHeight * 0.05,
+              rightPadding: screenWidth * 0.05,
               children: _about
                   .map(
                     (data) => ArticleCard(

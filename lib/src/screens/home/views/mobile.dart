@@ -48,7 +48,7 @@ class MainMobile extends StatelessWidget {
         builder: (context, state) {
           return Scaffold(
             extendBodyBehindAppBar: false,
-            backgroundColor: GlobalColor.background,
+            // backgroundColor: GlobalColor.background,
             extendBody: false,
             body: IndexedStack(
               index: state.mode.index,

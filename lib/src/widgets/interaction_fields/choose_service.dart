@@ -32,6 +32,8 @@ class ChooseService extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final HomeTabState homeTabState = context.watch<HomeTabBloc>().state;
+    final double screenHeight = MediaQuery.of(context).size.height;
+    final double screenWidth = MediaQuery.of(context).size.width;
     return BlocProvider<ServicesTabBloc>.value(
       value: context.read<ServicesTabBloc>(),
       child: BlocBuilder<ServicesTabBloc, ServicesTabState>(
@@ -57,7 +59,7 @@ class ChooseService extends StatelessWidget {
                     builder: (bcontext, value, child) => Padding(
                       padding: EdgeInsets.only(right: 8.0 + 100 * value),
                       child: IconCard(
-                          size: 70,
+                          size: screenWidth * 0.2,
                           icon: e.value,
                           text: e.key.title,
                           isSelected: e.key == state.mode,
@@ -88,7 +90,7 @@ class ChooseService extends StatelessWidget {
                   (e) => Padding(
                     padding: EdgeInsets.only(right: 8.0),
                     child: IconCard(
-                        size: 70,
+                        size: screenWidth * 0.2,
                         icon: e.value,
                         text: e.key.title,
                         isSelected: e.key == state.mode,
