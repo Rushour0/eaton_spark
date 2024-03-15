@@ -69,12 +69,12 @@ class MapDirections extends MapResponse {
         ),
         polyline = Polyline(
           polylineId: PolylineId(directions['overview_polyline']['points']),
-          points: PolylineDo.Polyline.Decode(
-                  encodedString: directions['overview_polyline']['points'],
-                  precision: 5)
-              .decodedCoords
+          points: polylinePoints
+              .decodePolyline(
+                directions['overview_polyline']['points'],
+              )
               .map(
-                (e) => LatLng(e[0], e[1]),
+                (e) => LatLng(e.latitude, e.longitude),
               )
               .toList(),
           color: Colors.blue,
