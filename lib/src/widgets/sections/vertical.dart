@@ -1,9 +1,8 @@
-import 'package:eaton_spark/src/globals/colors.dart';
 import 'package:flutter/material.dart';
 
 class VerticalSection extends StatelessWidget {
   const VerticalSection({
-    Key? key,
+    super.key,
     this.scrollable = true,
     required this.children,
     this.height = 100,
@@ -12,7 +11,7 @@ class VerticalSection extends StatelessWidget {
     this.verticalPadding = 8,
     this.title = 'Vertical Section',
     this.rightPadding = 8,
-  }) : super(key: key);
+  });
   final double height;
   final double overallHeight;
   final double spacing;

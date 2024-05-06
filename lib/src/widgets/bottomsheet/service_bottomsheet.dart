@@ -38,7 +38,7 @@ class ServicesTabBottomSheet extends StatelessWidget {
           child: Container(
             child: Column(
               children: <Widget>[
-                    Container(
+                    const SizedBox(
                       height: 50,
                       width: double.infinity,
                       child: Column(

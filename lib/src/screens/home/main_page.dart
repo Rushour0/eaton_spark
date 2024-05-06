@@ -14,7 +14,7 @@ class MainPage extends StatelessWidget {
     final double aspectRatio = MediaQuery.of(context).size.aspectRatio;
 
     if (screenWidth <= BreakPoints.md.value) {
-      return MainMobile();
+      return const MainMobile();
     } else {
       return Container();
     }

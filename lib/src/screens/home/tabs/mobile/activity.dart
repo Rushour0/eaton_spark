@@ -1,10 +1,7 @@
-import 'package:eaton_spark/src/bloc/authentication/bloc.dart';
 import 'package:eaton_spark/src/bloc/home/bloc.dart';
 import 'package:eaton_spark/src/globals/colors.dart';
 import 'package:eaton_spark/src/models/home_tabs.dart';
 import 'package:eaton_spark/src/widgets/appbar/appbar.dart';
-import 'package:eaton_spark/src/widgets/sections/grid.dart';
-import 'package:eaton_spark/src/widgets/sections/horizontal.dart';
 import 'package:eaton_spark/src/widgets/sections/vertical.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,11 +13,11 @@ class ActivityTab extends StatelessWidget {
   static final List<Widget> _ulist = [
     // Cards for past recent activity of charging and swapping
     Container(
-      child: Column(
+      child: const Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(16.0, 8, 0, 0),
+            padding: EdgeInsets.fromLTRB(16.0, 8, 0, 0),
             child: Text('Model Y Tesla'),
           ),
           ListTile(
@@ -38,13 +35,13 @@ class ActivityTab extends StatelessWidget {
         ],
       ),
     ),
-    Divider(),
+    const Divider(),
     Container(
-      child: Column(
+      child: const Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(16.0, 8, 0, 0),
+            padding: EdgeInsets.fromLTRB(16.0, 8, 0, 0),
             child: Text('Model X Tesla'),
           ),
           ListTile(
@@ -67,11 +64,11 @@ class ActivityTab extends StatelessWidget {
   static final List<Widget> _list = [
     // Cards for past recent activity of charging and swapping
     Container(
-      child: Column(
+      child: const Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(16.0, 8, 0, 0),
+            padding: EdgeInsets.fromLTRB(16.0, 8, 0, 0),
             child: Text('Model 3 Tesla'),
           ),
           ListTile(
@@ -89,13 +86,13 @@ class ActivityTab extends StatelessWidget {
         ],
       ),
     ),
-    Divider(),
+    const Divider(),
     Container(
-      child: Column(
+      child: const Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(16.0, 8, 0, 0),
+            padding: EdgeInsets.fromLTRB(16.0, 8, 0, 0),
             child: Text('Model S Tesla'),
           ),
           ListTile(
@@ -113,13 +110,13 @@ class ActivityTab extends StatelessWidget {
         ],
       ),
     ),
-    Divider(),
+    const Divider(),
     Container(
-      child: Column(
+      child: const Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(16.0, 8, 0, 0),
+            padding: EdgeInsets.fromLTRB(16.0, 8, 0, 0),
             child: Text('Model X Tesla'),
           ),
           ListTile(
@@ -145,7 +142,7 @@ class ActivityTab extends StatelessWidget {
     _content = [
       PlayAnimationBuilder<double>(
           tween: Tween(begin: 0.4, end: 1.0),
-          duration: Duration(seconds: 3),
+          duration: const Duration(seconds: 3),
           curve: Curves.fastOutSlowIn,
           builder: (context, value, child) {
             return VerticalSection(
@@ -157,7 +154,7 @@ class ActivityTab extends StatelessWidget {
           }),
       PlayAnimationBuilder<double>(
           tween: Tween(begin: 0.4, end: 1.0),
-          duration: Duration(seconds: 3),
+          duration: const Duration(seconds: 3),
           curve: Curves.fastOutSlowIn,
           builder: (context, value, child) {
             return VerticalSection(
@@ -184,7 +181,7 @@ class ActivityTab extends StatelessWidget {
       }, builder: (context, state) {
         return Scaffold(
           body: SingleChildScrollView(
-            child: Container(
+            child: SizedBox(
               height: MediaQuery.of(context).size.height - kToolbarHeight,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -194,7 +191,7 @@ class ActivityTab extends StatelessWidget {
                       Column(
                         children: [
                           CustomAppbar(
-                            title: Padding(
+                            title: const Padding(
                               padding: EdgeInsets.fromLTRB(0, 0, 16, 8),
                               child: Align(
                                 alignment: Alignment.centerLeft,
@@ -222,7 +219,7 @@ class ActivityTab extends StatelessWidget {
                               ),
                             ),
                           ),
-                          Align(
+                          const Align(
                             alignment: Alignment.centerLeft,
                             child: Padding(
                               padding: EdgeInsets.fromLTRB(16, 8, 16, 0),

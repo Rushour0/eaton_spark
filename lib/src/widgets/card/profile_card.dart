@@ -26,15 +26,15 @@ class ProfileCard extends StatelessWidget {
         child: InkWell(
           overlayColor: MaterialStateProperty.all(GlobalColor.primary),
           customBorder: RoundedRectangleBorder(
-            side: BorderSide(color: GlobalColor.primary, width: 2),
+            side: const BorderSide(color: GlobalColor.primary, width: 2),
             borderRadius: BorderRadius.circular(8),
           ),
+          onTap: onTap ?? () {},
           child: ListTile(
             leading: iconWidget,
             title: Text(title),
-            trailing: navigates ? Icon(Icons.arrow_forward_ios_rounded) : null,
+            trailing: navigates ? const Icon(Icons.arrow_forward_ios_rounded) : null,
           ),
-          onTap: onTap ?? () {},
         ),
       );
     }
@@ -43,7 +43,7 @@ class ProfileCard extends StatelessWidget {
       child: InkWell(
         overlayColor: MaterialStateProperty.all(GlobalColor.primary),
         customBorder: RoundedRectangleBorder(
-          side: BorderSide(color: GlobalColor.primary, width: 2),
+          side: const BorderSide(color: GlobalColor.primary, width: 2),
           borderRadius: BorderRadius.circular(8),
         ),
         onTap: onTap ?? () {},
@@ -53,7 +53,7 @@ class ProfileCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               
-              Container(
+              SizedBox(
                 height: screenWidth * 0.2,
                 width: screenWidth * 0.2,
                 child: iconWidget,
@@ -61,7 +61,7 @@ class ProfileCard extends StatelessWidget {
               Text(title),
             ]
                 .map((e) =>
-                    Padding(padding: EdgeInsets.fromLTRB(8, 0, 8, 8), child: e))
+                    Padding(padding: const EdgeInsets.fromLTRB(8, 0, 8, 8), child: e))
                 .toList()),
       ),
     );

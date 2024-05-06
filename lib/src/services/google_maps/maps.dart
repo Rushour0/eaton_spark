@@ -1,10 +1,8 @@
-import 'dart:io';
 
 import 'package:eaton_spark/src/bloc/map/bloc.dart';
 import 'package:eaton_spark/src/models/map.dart';
 import 'package:eaton_spark/src/models/service_tab.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import 'package:geolocator_android/geolocator_android.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -23,9 +21,9 @@ class GoogleMapService {
 
   static GoogleMapController? controller;
 
-  static Set<Marker> _markers = {};
+  static final Set<Marker> _markers = {};
 
-  static Set<Polyline> _polylines = {};
+  static final Set<Polyline> _polylines = {};
 
   static Set<Marker> get markers => _markers;
 
@@ -77,8 +75,6 @@ class GoogleMapService {
 
   static Future<void> _batteryViaLocation({
     dynamic location,
-    dynamic time,
-    dynamic date,
   }) async {
     _markers.clear();
 
@@ -132,7 +128,6 @@ class GoogleMapService {
     required dynamic destination,
     bool midpoint = false,
     TravelMode mode = TravelMode.driving,
-    List<String> waypoints = const ["via:Nearest EV Stations"],
     String departureTime = 'now',
   }) async {
     GoogleMapBloc().changeMap(GoogleMapStatus.searching);
@@ -174,7 +169,7 @@ class GoogleMapService {
       LatLng midPoint = mapDirections.polyline.points[mid];
       _markers.add(
         Marker(
-          markerId: MarkerId('midpoint'),
+          markerId: const MarkerId('midpoint'),
           position: midPoint,
           icon: BitmapDescriptor.defaultMarker,
         ),
@@ -205,7 +200,7 @@ class GoogleMapService {
 
   static Future<Position> _currentLocation() async {
     stationIcon ??= await BitmapDescriptor.fromAssetImage(
-      ImageConfiguration(
+      const ImageConfiguration(
         size: Size(4, 4),
         devicePixelRatio: 0.1,
       ),
@@ -213,7 +208,7 @@ class GoogleMapService {
       mipmaps: false,
     );
     batteryIcon ??= await BitmapDescriptor.fromAssetImage(
-      ImageConfiguration(
+      const ImageConfiguration(
         size: Size(4, 4),
         devicePixelRatio: 0.1,
       ),
@@ -298,7 +293,7 @@ class GoogleMapService {
   }
 
   static void _calculateZoom({required LatLng main, required LatLng faraway}) {
-    final double zoom = 11;
+    const double zoom = 11;
     controller!.animateCamera(
       CameraUpdate.newCameraPosition(
         CameraPosition(

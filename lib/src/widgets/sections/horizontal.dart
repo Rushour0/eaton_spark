@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class HorizontalSection extends StatelessWidget {
   const HorizontalSection({
-    Key? key,
+    super.key,
     this.scrollable = true,
     required this.children,
     this.height = 100,
@@ -10,7 +10,7 @@ class HorizontalSection extends StatelessWidget {
     this.verticalPadding = 8,
     this.title = 'Horizontal Section',
     this.rightPadding = 8,
-  }) : super(key: key);
+  });
   final double height;
   final double spacing;
   final String title;

@@ -24,7 +24,7 @@ class MapQueryField extends StatelessWidget {
         children: [
           Text(
             labelText,
-            style: TextStyle(
+            style: const TextStyle(
               fontWeight: FontWeight.w600,
             ),
           ),

@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 class GridSection extends StatelessWidget {
   const GridSection({
-    Key? key,
+    super.key,
     required this.children,
     this.height = 100,
     this.spacing = 8,
     this.title = 'Grid Section',
     this.crossAxisCount = 2,
-  }) : super(key: key);
+  });
   final double height;
   final double spacing;
   final String title;

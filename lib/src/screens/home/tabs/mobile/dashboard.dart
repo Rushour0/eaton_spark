@@ -1,4 +1,3 @@
-import 'package:eaton_spark/src/bloc/authentication/bloc.dart';
 import 'package:eaton_spark/src/bloc/home/bloc.dart';
 import 'package:eaton_spark/src/bloc/services_tab/bloc.dart';
 import 'package:eaton_spark/src/globals/colors.dart';
@@ -96,7 +95,7 @@ class Dashboard extends StatelessWidget {
           children: [
             CustomAppbar(
               title: Padding(
-                padding: EdgeInsets.fromLTRB(0, 0, 16, 8),
+                padding: const EdgeInsets.fromLTRB(0, 0, 16, 8),
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text.rich(
@@ -105,12 +104,12 @@ class Dashboard extends StatelessWidget {
                       children: [
                         TextSpan(
                           text: FirebaseAuth.instance.currentUser!.displayName,
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: GlobalColor.primary,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        TextSpan(
+                        const TextSpan(
                           text: '!',
                           style: TextStyle(
                             // color: GlobalColor.secondary,
@@ -118,11 +117,11 @@ class Dashboard extends StatelessWidget {
                           ),
                         ),
                       ],
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 18,
                       ),
                     ),
-                    style: TextStyle(fontSize: 18),
+                    style: const TextStyle(fontSize: 18),
                   ),
                 ),
               ),
@@ -166,7 +165,7 @@ class Dashboard extends StatelessWidget {
                       (e) => CustomAnimationBuilder<double>(
                         control: Control.play,
                         tween: Tween<double>(begin: 0, end: 1),
-                        duration: Duration(milliseconds: 500),
+                        duration: const Duration(milliseconds: 500),
                         delay: Duration(milliseconds: e.key.index * 300),
                         curve: Curves.linear,
                         builder: (context, value, child) => Transform.translate(
@@ -201,7 +200,7 @@ class Dashboard extends StatelessWidget {
                   )
                   .toList(),
             ),
-            BatteryView(),
+            const BatteryView(),
             HorizontalSection(
               title: 'About Us',
               scrollable: true,
@@ -227,7 +226,7 @@ class Dashboard extends StatelessWidget {
             print('completed');
           },
           tween: Tween<double>(begin: 1, end: 0),
-          duration: Duration(seconds: 2),
+          duration: const Duration(seconds: 2),
           curve: Curves.fastOutSlowIn,
           builder: (context, value, child) {
             return Padding(

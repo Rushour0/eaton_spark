@@ -2,7 +2,6 @@ import 'package:eaton_spark/src/bloc/home/bloc.dart';
 import 'package:eaton_spark/src/bloc/services_tab/bloc.dart';
 import 'package:eaton_spark/src/globals/colors.dart';
 import 'package:eaton_spark/src/models/service_tab.dart';
-import 'package:eaton_spark/src/widgets/sections/horizontal.dart';
 import 'package:eaton_spark/src/widgets/sections/vertical.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +12,7 @@ import 'package:wave/wave.dart';
 class BatteryView extends StatelessWidget {
   const BatteryView({super.key});
 
-  static List<Color> _colors = [
+  static final List<Color> _colors = [
     // GlobalColor.secondary,
     // GlobalColor.primary.withOpacity(0.9),
     GlobalColor.primary,
@@ -53,13 +52,13 @@ class BatteryView extends StatelessWidget {
                       durations: _durations,
                       heightPercentages: _heightPercentages,
                     ),
-                    size: Size(100, 225),
+                    size: const Size(100, 225),
                     waveAmplitude: 0,
                   ),
                 ),
               ),
               // Dropdown with vehicle choosing options
-              Container(
+              SizedBox(
                 width: screenWidth / 2,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -67,7 +66,7 @@ class BatteryView extends StatelessWidget {
                   children: [
                     Container(
                       width: screenWidth / 2.5,
-                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
                       decoration: BoxDecoration(
                         // color: GlobalColor.background,
                         border: Border.all(
@@ -94,31 +93,31 @@ class BatteryView extends StatelessWidget {
                         onChanged: (String? newValue) {},
                       ),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     Image.asset(
                       'assets/images/car-view.png',
                       width: screenWidth / 2.5,
                       fit: BoxFit.fitWidth,
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
 
                     // last charge
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Owned By: ',
                           style: TextStyle(fontSize: 12),
                         ),
                         Text(
                           " ${FirebaseAuth.instance.currentUser!.displayName!}",
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 12, fontWeight: FontWeight.bold),
                         ),
                       ],
                     ),
                     // Fast charge enabled
-                    Row(
+                    const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
@@ -132,7 +131,7 @@ class BatteryView extends StatelessWidget {
                         ),
                       ],
                     ),
-                    Row(
+                    const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
@@ -159,28 +158,28 @@ class BatteryView extends StatelessWidget {
             rightPadding: 0,
             // overallHeight: 100,
             children: [
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text('Battery Level:'),
                   Text(' 90%'),
                 ],
               ),
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text('Battery Health:'),
                   Text(' 78%'),
                 ],
               ),
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text('Battery Temperature:'),
                   Text(' 27°C'),
                 ],
               ),
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text('Battery Voltage:'),
@@ -202,7 +201,7 @@ class BatteryView extends StatelessWidget {
                         .changeMode(ServicesTabMode.charge_now);
                     HomeTabBloc().changeHomeTab(1);
                   },
-                  child: Text('Charge Now!'),
+                  child: const Text('Charge Now!'),
                 ),
               ),
             ],

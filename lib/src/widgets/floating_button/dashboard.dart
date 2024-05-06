@@ -11,12 +11,12 @@ class FloatingButtonDashboard extends StatelessWidget {
       activeIcon: Icons.close,
       children: [
         SpeedDialChild(
-          child: Icon(Icons.wifi),
+          child: const Icon(Icons.wifi),
           label: 'Add via WiFi',
           onTap: () {},
         ),
         SpeedDialChild(
-          child: Icon(Icons.two_wheeler),
+          child: const Icon(Icons.two_wheeler),
           label: 'Add 2 Wheeler',
           onTap: () {},
         ),

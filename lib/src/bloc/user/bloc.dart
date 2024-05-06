@@ -1,6 +1,5 @@
 import 'package:eaton_spark/src/models/ev.dart';
 import 'package:eaton_spark/src/models/service_tab.dart';
-import 'package:eaton_spark/src/services/google_maps/maps.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:equatable/equatable.dart';
@@ -17,7 +16,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   }
 
   _serviceChanged(UserStateChanged event, Emitter<UserState> emit) async {
-    emit(UserState());
+    emit(const UserState());
   }
 
   void receiveEvent(UserEvent event) {

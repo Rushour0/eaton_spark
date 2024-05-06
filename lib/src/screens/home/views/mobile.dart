@@ -4,15 +4,12 @@ import 'package:eaton_spark/src/bloc/map/bloc.dart';
 import 'package:eaton_spark/src/bloc/services_tab/bloc.dart';
 import 'package:eaton_spark/src/bloc/theme/bloc.dart';
 import 'package:eaton_spark/src/globals/colors.dart';
-import 'package:eaton_spark/src/models/service_tab.dart';
 import 'package:eaton_spark/src/screens/home/tabs/mobile/activity.dart';
 
 import 'package:eaton_spark/src/screens/home/tabs/mobile/dashboard.dart';
 import 'package:eaton_spark/src/screens/home/tabs/mobile/profile.dart';
 import 'package:eaton_spark/src/screens/home/tabs/mobile/services.dart';
-import 'package:eaton_spark/src/widgets/appbar/appbar.dart';
 import 'package:flutter/material.dart';
-import 'dart:math' as math;
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -66,7 +63,7 @@ class MainMobile extends StatelessWidget {
               onTap: (index) {
                 HomeTabBloc().changeHomeTab(index);
               },
-              items: [
+              items: const [
                 BottomNavigationBarItem(
                   icon: Icon(Icons.home),
                   label: 'Home',

@@ -5,7 +5,7 @@ import 'package:eaton_spark/src/services/firebase/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthenticationModel {
-  static AuthenticationModel _instance = AuthenticationModel._internal();
+  static final AuthenticationModel _instance = AuthenticationModel._internal();
   factory AuthenticationModel() {
     return _instance;
   }
@@ -56,8 +56,8 @@ class AuthenticationModel {
             code: 'passwords-do-not-match',
             message: 'Passwords do not match. Please try again.');
       }
-    } on Exception catch (e) {
-      throw e;
+    } on Exception {
+      rethrow;
     }
 
     return service.confirmPasswordReset(code: code, password: password);

@@ -11,7 +11,7 @@ class Splash extends StatelessWidget {
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
     Future.delayed(
-      Duration(seconds: 2),
+      const Duration(seconds: 2),
       () => handleSplash(context),
     );
     return Scaffold(

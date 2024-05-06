@@ -19,8 +19,8 @@ class StationInfoCard extends StatelessWidget {
           subtitle: Text(address),
           // isThreeLine: true,
         ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
+        const Padding(
+          padding: EdgeInsets.all(8.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -116,15 +116,15 @@ class StationInfoCard extends StatelessWidget {
                 await showDialog(
                     context: context,
                     builder: (context) => AlertDialog(
-                          title: Text('Book Slot'),
+                          title: const Text('Book Slot'),
                           content:
-                              Text('Are you sure you want to book this slot?'),
+                              const Text('Are you sure you want to book this slot?'),
                           actions: [
                             TextButton(
                               onPressed: () {
                                 Navigator.of(context).pop();
                               },
-                              child: Text('Cancel'),
+                              child: const Text('Cancel'),
                             ),
                             TextButton(
                               onPressed: () async {
@@ -132,19 +132,19 @@ class StationInfoCard extends StatelessWidget {
                                 await showDialog(
                                   context: context,
                                   builder: (context) => AlertDialog(
-                                    title: Text('Booking Confirmed'),
-                                    content: Text('Your slot has been booked'),
+                                    title: const Text('Booking Confirmed'),
+                                    content: const Text('Your slot has been booked'),
                                     actions: [
                                       TextButton(
                                           onPressed: () {
                                             Navigator.of(context).pop();
                                           },
-                                          child: Text('Ok'))
+                                          child: const Text('Ok'))
                                     ],
                                   ),
                                 );
                               },
-                              child: Text('Confirm'),
+                              child: const Text('Confirm'),
                             ),
                           ],
                         ));

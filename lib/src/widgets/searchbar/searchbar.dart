@@ -71,10 +71,6 @@ class _SearchBarState extends State<SearchBar>
                   borderRadius: BorderRadius.circular(30.0),
                 ),
                 child: AnimatedBuilder(
-                  child: const Icon(
-                    Icons.mic,
-                    size: 20.0,
-                  ),
                   builder: (context, widget) {
                     return Transform.rotate(
                       angle: _controller.value * 2.0 * math.pi,
@@ -82,6 +78,10 @@ class _SearchBarState extends State<SearchBar>
                     );
                   },
                   animation: _controller,
+                  child: const Icon(
+                    Icons.mic,
+                    size: 20.0,
+                  ),
                 ),
               ),
             ),

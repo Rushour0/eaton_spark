@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class UserModel {
   UserModel._internal();
 
-  static UserModel _instance = UserModel._internal();
+  static final UserModel _instance = UserModel._internal();
 
   factory UserModel() => _instance;
 

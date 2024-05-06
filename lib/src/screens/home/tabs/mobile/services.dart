@@ -1,5 +1,3 @@
-import 'package:eaton_spark/src/bloc/authentication/bloc.dart';
-import 'package:eaton_spark/src/bloc/home/bloc.dart';
 import 'package:eaton_spark/src/bloc/map/bloc.dart';
 import 'package:eaton_spark/src/bloc/services_tab/bloc.dart';
 import 'package:eaton_spark/src/globals/colors.dart';
@@ -8,7 +6,6 @@ import 'package:eaton_spark/src/models/service_tab.dart';
 
 import 'package:eaton_spark/src/services/google_maps/maps.dart';
 import 'package:eaton_spark/src/widgets/appbar/appbar.dart';
-import 'package:eaton_spark/src/widgets/bottomsheet/service_bottomsheet.dart';
 import 'package:eaton_spark/src/widgets/interaction_fields/choose_service.dart';
 
 import 'package:eaton_spark/src/widgets/map/curved_map.dart';
@@ -105,7 +102,7 @@ class ServicesTab extends StatelessWidget {
           return false;
         }, builder: (context, state) {
           return SingleChildScrollView(
-            child: Container(
+            child: SizedBox(
               height: (MediaQuery.of(context).size.height - kToolbarHeight),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -115,7 +112,7 @@ class ServicesTab extends StatelessWidget {
                   Column(
                     children: [
                       CustomAppbar(
-                        title: Padding(
+                        title: const Padding(
                           padding: EdgeInsets.fromLTRB(0, 0, 16, 8),
                           child: Align(
                             alignment: Alignment.centerLeft,
@@ -143,7 +140,7 @@ class ServicesTab extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Align(
+                      const Align(
                         alignment: Alignment.centerLeft,
                         child: Padding(
                           padding: EdgeInsets.fromLTRB(16, 8, 16, 0),
@@ -157,8 +154,8 @@ class ServicesTab extends StatelessWidget {
                       ),
                     ],
                   ),
-                  ChooseService(),
-                  Expanded(child: CurveEdgeMap()),
+                  const ChooseService(),
+                  const Expanded(child: CurveEdgeMap()),
                 ],
               ),
             ),

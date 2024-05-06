@@ -29,7 +29,7 @@ class ProfileTab extends StatelessWidget {
         ),
       ],
       child: Scaffold(
-          body: Container(
+          body: SizedBox(
         height: MediaQuery.of(context).size.height -
             // MediaQuery.of(context).padding.top
             kToolbarHeight,
@@ -42,7 +42,7 @@ class ProfileTab extends StatelessWidget {
               Column(
                 children: [
                   CustomAppbar(
-                    title: Padding(
+                    title: const Padding(
                       padding: EdgeInsets.fromLTRB(0, 0, 16, 8),
                       child: Align(
                         alignment: Alignment.centerLeft,
@@ -73,15 +73,15 @@ class ProfileTab extends StatelessWidget {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
+                      SizedBox(
                         width: MediaQuery.of(context).size.width * 0.7,
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: Padding(
-                            padding: EdgeInsets.fromLTRB(16, 8, 16, 0),
+                            padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
                             child: Text(
                               FirebaseAuth.instance.currentUser!.displayName!,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 48,
                               ),
                             ),
@@ -91,10 +91,10 @@ class ProfileTab extends StatelessWidget {
                       Align(
                         alignment: Alignment.topRight,
                         child: Padding(
-                          padding: EdgeInsets.fromLTRB(0, 8, 16, 0),
+                          padding: const EdgeInsets.fromLTRB(0, 8, 16, 0),
                           child: Container(
-                            padding: EdgeInsets.all(2),
-                            decoration: BoxDecoration(
+                            padding: const EdgeInsets.all(2),
+                            decoration: const BoxDecoration(
                               gradient: LinearGradient(
                                 colors: [
                                   GlobalColor.primary,
@@ -143,17 +143,17 @@ class ProfileTab extends StatelessWidget {
                   title: 'Other settings',
                   scrollable: false,
                   children: [
-                    ProfileCard(
+                    const ProfileCard(
                       isLongCard: true,
                       iconWidget: Icon(Icons.color_lens_rounded),
                       title: "Theme",
                     ),
-                    ProfileCard(
+                    const ProfileCard(
                       isLongCard: true,
                       title: "Language",
                       iconWidget: Icon(Icons.language_rounded),
                     ),
-                    ProfileCard(
+                    const ProfileCard(
                       isLongCard: true,
                       title: "Help",
                       iconWidget: Icon(Icons.help_rounded),
@@ -162,7 +162,7 @@ class ProfileTab extends StatelessWidget {
                       isLongCard: true,
                       title: "Logout",
                       navigates: false,
-                      iconWidget: Icon(Icons.logout_rounded),
+                      iconWidget: const Icon(Icons.logout_rounded),
                       onTap: () async {
                         await AuthenticationService().signOut();
                         Navigator.of(context).pushNamedAndRemoveUntil(

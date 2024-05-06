@@ -30,7 +30,7 @@ class HomeTabBloc extends Bloc<HomeTabEvent, HomeTabState> {
     );
   }
 
-  static Map<HomeTabMode, bool> _firstLoads = {
+  static final Map<HomeTabMode, bool> _firstLoads = {
     HomeTabMode.dashboard: false,
     HomeTabMode.activity: false,
     HomeTabMode.profile: false,

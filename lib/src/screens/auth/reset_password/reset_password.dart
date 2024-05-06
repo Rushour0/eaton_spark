@@ -55,7 +55,7 @@ class _ResetPasswordState extends State<ResetPassword> {
     }
 
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
+      const SnackBar(
         content: Text('Password has been reset'),
       ),
     );

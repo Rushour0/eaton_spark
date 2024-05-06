@@ -32,6 +32,6 @@ class ServiceCard extends StatelessWidget {
         title,
         style: Theme.of(context).textTheme.bodyMedium,
       ),
-    ].map((e) => Padding(padding: EdgeInsets.only(top: 8), child: e)).toList());
+    ].map((e) => Padding(padding: const EdgeInsets.only(top: 8), child: e)).toList());
   }
 }

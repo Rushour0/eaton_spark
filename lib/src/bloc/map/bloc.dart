@@ -21,12 +21,12 @@ class GoogleMapBloc extends Bloc<GoogleMapEvent, GoogleMapState> {
   void _onMapChanged(GoogleMapEvent event, Emitter<GoogleMapState> emit) async {
     if (event is GoogleMapInitializing) {
       emit(
-        GoogleMapInitial(),
+        const GoogleMapInitial(),
       );
       return;
     } else if (event is GoogleMapSearchStarted) {
       emit(
-        GoogleMapSearching(),
+        const GoogleMapSearching(),
       );
       return;
     } else if (event is GoogleMapMarkersAdded) {
@@ -45,12 +45,12 @@ class GoogleMapBloc extends Bloc<GoogleMapEvent, GoogleMapState> {
       return;
     } else if (event is GoogleMapRouteModeExit) {
       emit(
-        GoogleMapRouteModeInactive(),
+        const GoogleMapRouteModeInactive(),
       );
     }
 
     emit(
-      GoogleMapLoaded(),
+      const GoogleMapLoaded(),
     );
   }
 

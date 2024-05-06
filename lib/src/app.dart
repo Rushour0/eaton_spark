@@ -1,7 +1,6 @@
 import 'package:eaton_spark/src/bloc/theme/bloc.dart';
 import 'package:eaton_spark/src/globals/colors.dart';
 import 'package:eaton_spark/src/models/routes.dart';
-import 'package:eaton_spark/src/screens/auth/forgot_password/components/forgot_password_mobile.dart';
 import 'package:eaton_spark/src/screens/auth/forgot_password/forgot_password.dart';
 import 'package:eaton_spark/src/screens/auth/reset_password/reset_password.dart';
 import 'package:eaton_spark/src/screens/auth/signin/signin.dart';
@@ -10,7 +9,6 @@ import 'package:eaton_spark/src/screens/common/not_found.dart';
 import 'package:eaton_spark/src/screens/home/main_page.dart';
 import 'package:eaton_spark/src/screens/splash/splash.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -50,7 +48,7 @@ class App extends StatelessWidget {
                   final MediaQueryData data = MediaQuery.of(context);
                   return MediaQuery(
                     data: data.copyWith(
-                      textScaleFactor: 0.8,
+                      textScaler: const TextScaler.linear(0.8),
                     ),
                     child: Builder(
                       builder: (context) {

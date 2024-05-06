@@ -1,6 +1,5 @@
 import 'package:eaton_spark/src/bloc/home/bloc.dart';
 import 'package:eaton_spark/src/bloc/services_tab/bloc.dart';
-import 'package:eaton_spark/src/bloc/theme/bloc.dart';
 import 'package:eaton_spark/src/globals/colors.dart';
 import 'package:eaton_spark/src/models/home_tabs.dart';
 import 'package:eaton_spark/src/models/service_tab.dart';
@@ -53,7 +52,7 @@ class ChooseService extends StatelessWidget {
                   (e) => CustomAnimationBuilder<double>(
                     control: Control.play,
                     tween: Tween<double>(begin: 1, end: 0),
-                    duration: Duration(milliseconds: 500),
+                    duration: const Duration(milliseconds: 500),
                     delay: Duration(milliseconds: e.key.index * 300),
                     curve: Curves.fastOutSlowIn,
                     builder: (bcontext, value, child) => Padding(
@@ -74,7 +73,7 @@ class ChooseService extends StatelessWidget {
                                   enableDrag: true,
                                   context: context,
                                   builder: (context) =>
-                                      ServicesTabBottomSheet());
+                                      const ServicesTabBottomSheet());
                             }
                           }),
                     ),
@@ -88,7 +87,7 @@ class ChooseService extends StatelessWidget {
             children: _options.entries
                 .map(
                   (e) => Padding(
-                    padding: EdgeInsets.only(right: 8.0),
+                    padding: const EdgeInsets.only(right: 8.0),
                     child: IconCard(
                         size: screenWidth * 0.2,
                         icon: e.value,
@@ -104,7 +103,7 @@ class ChooseService extends StatelessWidget {
                                     GlobalColor.primary.withAlpha(100),
                                 enableDrag: true,
                                 context: context,
-                                builder: (context) => ServicesTabBottomSheet());
+                                builder: (context) => const ServicesTabBottomSheet());
                           }
                         }),
                   ),
@@ -120,7 +119,7 @@ class ChooseService extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               _contents,
-              Divider(
+              const Divider(
                 color: Colors.lightGreen,
                 thickness: 2,
                 indent: 8,
@@ -143,7 +142,7 @@ class ChooseService extends StatelessWidget {
 }
 
 class MapInputField extends StatelessWidget {
-  MapInputField({super.key, required this.mode});
+  const MapInputField({super.key, required this.mode});
 
   final ServicesTabMode mode;
 
@@ -191,7 +190,7 @@ class MapInputField extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
         ),
         child: ExpansionTile(
-          key: Key('map_input_field'),
+          key: const Key('map_input_field'),
           initiallyExpanded: true,
           title: Text(
             mode.title,
@@ -222,9 +221,9 @@ class MapInputField extends StatelessWidget {
                           backgroundColor: GlobalColor.primary.withAlpha(100),
                           enableDrag: true,
                           context: context,
-                          builder: (context) => ServicesTabBottomSheet());
+                          builder: (context) => const ServicesTabBottomSheet());
                     },
-                    child: Text('Go'),
+                    child: const Text('Go'),
                   ),
                 ),
               ],

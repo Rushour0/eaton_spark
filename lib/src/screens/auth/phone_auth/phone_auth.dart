@@ -1,7 +1,5 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:eaton_spark/src/bloc/authentication/bloc.dart';
-import 'package:eaton_spark/src/models/authentication.dart';
 import 'package:eaton_spark/src/models/breakpoints.dart';
 import 'package:eaton_spark/src/screens/auth/phone_auth/components/phone_auth_mobile.dart';
 import 'package:firebase_auth/firebase_auth.dart';

@@ -30,7 +30,7 @@ class IconCard extends StatelessWidget {
               BoxShadow(
                 color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
                 blurRadius: 5,
-                offset: Offset(1, 4),
+                offset: const Offset(1, 4),
               ),
             ],
             gradient: LinearGradient(
