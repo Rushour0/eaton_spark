@@ -66,7 +66,7 @@ class ChooseService extends StatelessWidget {
                             BlocProvider.of<ServicesTabBloc>(context)
                                 .changeMode(e.key);
                             if (e.key == ServicesTabMode.charge_now) {
-                              showModalBottomSheet(
+                              await showModalBottomSheet(
                                   isScrollControlled: true,
                                   backgroundColor:
                                       GlobalColor.primary.withAlpha(100),
@@ -97,13 +97,14 @@ class ChooseService extends StatelessWidget {
                           BlocProvider.of<ServicesTabBloc>(context)
                               .changeMode(e.key);
                           if (e.key == ServicesTabMode.charge_now) {
-                            showModalBottomSheet(
+                            await showModalBottomSheet(
                                 isScrollControlled: true,
                                 backgroundColor:
                                     GlobalColor.primary.withAlpha(100),
                                 enableDrag: true,
                                 context: context,
-                                builder: (context) => const ServicesTabBottomSheet());
+                                builder: (context) =>
+                                    const ServicesTabBottomSheet());
                           }
                         }),
                   ),
@@ -204,8 +205,8 @@ class MapInputField extends StatelessWidget {
                 Align(
                   alignment: Alignment.bottomRight,
                   child: ElevatedButton(
-                    onPressed: () {
-                      GoogleMapService.mode(
+                    onPressed: () async {
+                      await GoogleMapService.mode(
                         mode,
                         source: _fromController.text,
                         destination: _toController.text,
@@ -216,7 +217,7 @@ class MapInputField extends StatelessWidget {
                         planDate: _plandateController.text,
                         planTime: _plantimeController.text,
                       );
-                      showModalBottomSheet(
+                      await showModalBottomSheet(
                           isScrollControlled: true,
                           backgroundColor: GlobalColor.primary.withAlpha(100),
                           enableDrag: true,

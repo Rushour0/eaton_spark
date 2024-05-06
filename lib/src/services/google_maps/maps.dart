@@ -1,4 +1,3 @@
-
 import 'package:eaton_spark/src/bloc/map/bloc.dart';
 import 'package:eaton_spark/src/models/map.dart';
 import 'package:eaton_spark/src/models/service_tab.dart';
@@ -41,24 +40,23 @@ class GoogleMapService {
     dynamic planLocation,
     dynamic planDate,
     dynamic planTime,
-  }) {
+  }) async {
     switch (mode) {
       case ServicesTabMode.charge_now:
         _markers.clear();
         _polylines.clear();
-        _stationsNearby();
+        await _stationsNearby();
         break;
       case ServicesTabMode.intercity:
         _markers.clear();
         _polylines.clear();
-        _getRoute(source: source, destination: destination, midpoint: true);
+        await _getRoute(
+            source: source, destination: destination, midpoint: true);
         break;
       case ServicesTabMode.battery_swap:
         _markers.clear();
         _polylines.clear();
-        _batteryViaLocation(
-          location: batteryLocation,
-        );
+        await _batteryViaLocation(location: batteryLocation);
         break;
       case ServicesTabMode.plan_charge:
         _markers.clear();

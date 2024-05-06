@@ -64,10 +64,10 @@ class ServicesTab extends StatelessWidget {
               children: [
                 FloatingActionButton(
                   heroTag: 'stations',
-                  onPressed: () {
+                  onPressed: () async {
                     BlocProvider.of<GoogleMapBloc>(context)
                         .changeMap(GoogleMapStatus.loading);
-                    GoogleMapService.currentLatLng().then((value) {
+                    await GoogleMapService.currentLatLng().then((value) {
                       GoogleMapService.controller!.animateCamera(
                         CameraUpdate.newCameraPosition(
                           CameraPosition(
